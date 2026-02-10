@@ -1,11 +1,23 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {  RouterOutlet } from '@angular/router';
 import {Button} from 'primeng/button'
 import { Menubar } from 'primeng/menubar';
+// import { ProductsList } from './Components/products-list/products-list';
+import { Menu } from './Components/menu/menu';
+import { routes } from './app.routes';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
+
+
+
+import { HomePage } from './Components/home-page/home-page';
+import { ProductsList } from './Components/products-list/products-list';
+
+ 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,Button, Menubar] ,
+  imports: [RouterOutlet,Button, Menubar,Menu] ,
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
