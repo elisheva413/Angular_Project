@@ -1,4 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+
 @import "primeicons/primeicons.css";
 
+.underline-input {
+  border: none !important;
+  border-bottom: 1px solid #000 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 1rem 0 !important;
+  width: 100%;
+  &:focus {
+    box-shadow: none !important;
+    border-bottom-width: 2px !important;
+  }
+}
+
+
+.p-button.p-button-black {
+  background: #000 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 1.2rem !important;
+  font-weight: bold;
+  &:hover {
+    background: #333 !important;
+  }
+}
+
+
+.p-button.p-button-outlined-black {
+  background: transparent !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+  border-radius: 0 !important;
+  padding: 1.2rem !important;
+}
 
