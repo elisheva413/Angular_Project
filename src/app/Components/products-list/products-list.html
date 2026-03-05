@@ -1,1 +1,22 @@
-<h1>product</h1>
+<div class="page">
+  <div class="page-inner">
+    <div class="top-row">
+      <h2 class="title">מוצרים</h2>
+    </div>
+
+    <div *ngIf="isLoading" class="state">טוען מוצרים…</div>
+    <div *ngIf="!isLoading && errorMsg" class="state error">{{ errorMsg }}</div>
+
+    <div *ngIf="!isLoading && !errorMsg && products.length === 0" class="state">
+      אין מוצרים להצגה
+    </div>
+
+    <div class="pnd-grid" *ngIf="!isLoading && !errorMsg && products.length > 0">
+      <app-product-card
+        *ngFor="let p of products; trackBy: trackById"
+        [product]="p"
+        (addToCart)="onAddToCart($event)"
+      ></app-product-card>
+    </div>
+  </div>
+</div>

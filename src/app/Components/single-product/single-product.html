@@ -1,1 +1,80 @@
-<p>single-product works!</p>
+<div class="sp-page">
+  <div class="sp-inner">
+    <div *ngIf="isLoading" class="state">טוען מוצר…</div>
+    <div *ngIf="!isLoading && errorMsg" class="state error">{{ errorMsg }}</div>
+
+    <ng-container *ngIf="!isLoading && !errorMsg && product as p">
+      <div class="sp-grid">
+        <!-- שמאל: מידע -->
+        <section class="sp-info">
+          <div class="breadcrumbs">עמוד הבית / {{ p.productsName }}</div>
+
+          <h1 class="title">{{ p.productsName }}</h1>
+
+          <div class="sku">#{{ p.productsId }}</div>
+
+          <div class="price">₪ {{ p.price }}</div>
+
+          <div class="divider"></div>
+
+          <div class="row">
+            <div class="label">COLOR</div>
+            <div class="value">{{ p.color || '—' }}</div>
+          </div>
+
+          <div class="row">
+            <div class="label">MATERIAL</div>
+            <div class="value">{{ p.material || '—' }}</div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="qty-row">
+            <div class="label">כמות</div>
+
+            <div class="qty">
+              <button type="button" class="qty-btn" (click)="dec()">−</button>
+              <span class="qty-val">{{ qty }}</span>
+              <button type="button" class="qty-btn" (click)="inc()">+</button>
+            </div>
+          </div>
+
+          <button
+            pButton
+            type="button"
+            class="add-btn"
+            label="הוספה לסל"
+            (click)="addToCart()"
+          ></button>
+
+          <button type="button" class="wish">
+            ♥ הוספה לרשימת המשאלות
+          </button>
+
+          <div class="desc" *ngIf="p.productsDescreption">
+            {{ p.productsDescreption }}
+          </div>
+        </section>
+
+        <!-- ימין: תמונה גדולה + thumbnails -->
+        <section class="sp-media">
+          <div class="thumbs" *ngIf="images.length > 1">
+            <button
+              type="button"
+              class="thumb"
+              *ngFor="let img of images; let i = index"
+              [class.active]="i === selectedIndex"
+              (click)="selectImage(i)"
+            >
+              <img [src]="img" alt="thumb" />
+            </button>
+          </div>
+
+          <div class="main">
+            <img class="main-img" [src]="mainImage" [alt]="p.productsName" />
+          </div>
+        </section>
+      </div>
+    </ng-container>
+  </div>
+</div>

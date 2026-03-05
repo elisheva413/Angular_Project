@@ -1,4 +1,50 @@
-<p>menu works!</p>
-   <div class="card">
-            <p-menubar [model]="items" />
-        </div>
+<div class="card">
+  <a routerLink="/products">Product</a>   
+  <p-menubar [model]="items"></p-menubar>           
+</div>
+<header class="pandora-header">
+  <div class="promo-bar">משלוח חינם בקנייה מעל 299₪</div>
+
+  <div class="middle-header">
+    <div class="header-left">
+      <div class="search-container">
+        <i class="pi pi-search" style="cursor: pointer;" (click)="onSearch()"></i>
+        <input 
+          type="text" 
+          placeholder="חפשו את התכשיט הבא שלכם..."
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"> </div>
+    </div>
+
+    <div class="header-center">
+      <img src="images/logo.png" alt="Pandora" class="main-logo" routerLink="/">
+    </div>
+
+    <div class="header-right">
+      <i class="pi pi-heart"></i>
+      <i class="pi pi-cog" routerLink="/admin" style="cursor: pointer;" title="ניהול"></i>
+      <i class="pi pi-map-marker" routerLink="/stores" style="cursor: pointer;" title="סניפי הרשת"></i>
+      <i class="pi pi-user" (click)="userMenu.toggle($event)" style="cursor: pointer;" title="אפשרויות משתמש"></i> 
+      <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
+      <div class="cart-icon">
+        <i class="pi pi-shopping-bag"></i><span class="count">0</span>
+      </div>
+    </div>
+  </div>
+
+   <nav class="categories-nav">
+     <ul>
+       <li><a [routerLink]="['/products']" [queryParams]="{ sort: 'newest' }">חדש</a></li>
+       <li><a href="#">בלעדי לאתר</a></li>
+       <li><a href="#">קולקציות</a></li> 
+       <li><a href="#">GIFT CARD</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 901 }">מתנות</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 115 }">שרשראות</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 120 }">עגילים</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 100 }">טבעות</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 105 }">צמידים</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 110 }">צ'ארמס</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 900 }">תכשיטי חריטה</a></li>
+     </ul>
+   </nav>
+</header>

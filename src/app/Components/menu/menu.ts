@@ -1,64 +1,50 @@
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { RouterModule, Router } from '@angular/router'; 
+import { FormsModule } from '@angular/forms'; // <--- חובה להוסיף את זה בשביל ה-ngModel!
 
 @Component({
-      selector: 'app-menu',
-      templateUrl: './menu.html',
-      styleUrl: './menu.scss',
-      imports: [MenubarModule]
+  selector: 'app-menu',
+  templateUrl: './menu.html',
+  styleUrl: './menu.scss',
+  standalone: true,
+  imports: [MenubarModule, MenuModule, RouterModule, FormsModule] // הוספנו FormsModule
 })
 export class Menu implements OnInit {
-    items: MenuItem[] | undefined;
+  private router = inject(Router);
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'Home',
-                icon: 'pi pi-home'
-            },
-            {
-                label: 'Product',
-                icon: 'pi pi-star'
-                
-            },
-            {
-                label: 'Projects',
-                icon: 'pi pi-search',
-                items: [
-                    {
-                        label: 'Components',
-                        icon: 'pi pi-bolt'
-                    },
-                    {
-                        label: 'Blocks',
-                        icon: 'pi pi-server'
-                    },
-                    {
-                        label: 'UI Kit',
-                        icon: 'pi pi-pencil'
-                    },
-                    {
-                        label: 'Templates',
-                        icon: 'pi pi-palette',
-                        items: [
-                            {
-                                label: 'Apollo',
-                                icon: 'pi pi-palette'
-                            },
-                            {
-                                label: 'Ultima',
-                                icon: 'pi pi-palette'
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                label: 'Contact',
-                icon: 'pi pi-envelope'
-            }
-        ];
+  items: MenuItem[] | undefined;
+  userMenuItems: MenuItem[] | undefined; 
+  
+  // משתנה שישמור את מה שהמשתמש מקליד בחיפוש
+  searchQuery: string = '';
+
+  ngOnInit() {
+    // התפריט הראשי המקורי שלך (נשאר בדיוק אותו דבר)
+    this.items = [ /*... הקוד שלך ...*/ ];
+
+    this.userMenuItems = [
+      { label: 'אזור אישי', icon: 'pi pi-user', routerLink: '/profile' },
+      { label: 'התנתקות', icon: 'pi pi-sign-out', command: () => this.logout() }
+    ];
+  }
+
+  // הפונקציה שמופעלת כשהמשתמש לוחץ אנטר או על זכוכית המגדלת
+  onSearch() {
+    if (this.searchQuery && this.searchQuery.trim() !== '') {
+      // מנתב לעמוד המוצרים ומוסיף את מילת החיפוש ל-URL (למשל: products?q=לב)
+      this.router.navigate(['/products'], { queryParams: { q: this.searchQuery.trim() } });
+      this.searchQuery = ''; // מאפס את שורת החיפוש אחרי הלחיצה
     }
+  }
+ 
+
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('userRole');
+    this.router.navigate(['/login']);
+  }
 }

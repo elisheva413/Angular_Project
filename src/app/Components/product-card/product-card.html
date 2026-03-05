@@ -1,0 +1,32 @@
+<div class="card">
+  <div
+    class="media"
+    (mouseenter)="onEnter()"
+    (mouseleave)="onLeave()"
+    (touchstart)="onTouchToggle($event)"
+  >
+<img class="img" [src]="currentImageSrc" [alt]="product?.productsName" />
+    <button
+      pButton
+      type="button"
+      icon="pi pi-shopping-bag"
+      class="cart-btn p-button-rounded p-button-text"
+      (click)="onAddToCartClick($event)"
+      aria-label="הוספה לסל"
+    ></button>
+
+    <button
+      type="button"
+      class="wish-btn"
+      aria-label="מועדפים"
+      (click)="$event.stopPropagation()"
+    >
+      ♥
+    </button>
+  </div>
+
+  <div class="info">
+    <div class="name">{{ product?.productsName }}</div>
+    <div class="price">₪{{ product?.price }}</div>
+  </div>
+</div>
