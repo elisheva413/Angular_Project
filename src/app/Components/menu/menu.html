@@ -1,5 +1,4 @@
 <div class="card">
-  <a routerLink="/products">Product</a>   
   <p-menubar [model]="items"></p-menubar>           
 </div>
 <header class="pandora-header">
@@ -34,7 +33,7 @@
 
    <nav class="categories-nav">
      <ul>
-       <li><a [routerLink]="['/products']" [queryParams]="{ sort: 'newest' }">חדש</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 135 }">חדש</a></li>
        <li><a href="#">בלעדי לאתר</a></li>
        <li><a href="#">קולקציות</a></li> 
        <li><a href="#">GIFT CARD</a></li>
@@ -44,7 +43,7 @@
        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 100 }">טבעות</a></li>
        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 105 }">צמידים</a></li>
        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 110 }">צ'ארמס</a></li>
-       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 900 }">תכשיטי חריטה</a></li>
+       <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 130 }">תכשיטי חריטה</a></li>
      </ul>
    </nav>
 </header>

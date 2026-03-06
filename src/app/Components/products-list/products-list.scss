@@ -1,43 +1,841 @@
-/* מרכז את כל האזור ונותן "מרווחי צד" כמו פנדורה */
+/* --- עיצוב פירורי לחם --- */
+// .breadcrumbs {
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-start; /* מתחיל מצד ימין */
+//   gap: 8px;
+//   font-size: 13px;
+//   margin-bottom: 24px;
+//   font-weight: 400;
+// }
+
+// .breadcrumb-link {
+//   color: #27251F;
+//   text-decoration: none;
+//   cursor: pointer;
+
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// }
+
+// .separator {
+//   color: #767676;
+//   font-size: 12px;
+// }
+
+// .breadcrumb-current {
+//   color: #767676;
+// }
+
+// /* --- אזור הכותרות --- */
+// .header-section {
+//   width: 96%; /* מתפרס על רוב המסך בהתאמה לגריד */
+//   max-width: 1600px;
+//   margin: 40px auto 40px; 
+// }
+
+// /* העטיפה החדשה שמיישרת הכל לימין */
+// .category-content {
+//   text-align: right; 
+// }
+
+// .search-title {
+//   font-size: 32px;
+//   font-weight: 500;
+//   color: #27251F;
+//   margin: 0;
+//   text-align: center; /* החיפוש נשאר באמצע המסך */
+// }
+
+// .category-title {
+//   font-size: 42px;
+//   font-weight: 600;
+//   color: #27251F;
+//   margin: 0 0 16px 0;
+//   text-transform: uppercase; /* הופך אנגלית לאותיות גדולות כמו ב-NEW COLLECTION */
+// }
+
+// .category-desc {
+//   font-size: 15px;
+//   line-height: 1.6;
+//   color: #555;
+//   max-width: 650px; /* מונע מהתיאור להימרח לרוחב כל המסך, נותן פרופורציה יפה */
+
+//   p {
+//     display: inline;
+//     margin: 0;
+//   }
+// }
+
+// .read-more-btn {
+//   background: none;
+//   border: none;
+//   padding: 0;
+//   margin-right: 6px;
+//   font-size: 14px;
+//   color: #27251F;
+//   text-decoration: underline;
+//   cursor: pointer;
+//   font-family: inherit;
+
+//   &:hover {
+//     color: #000;
+//   }
+// }
+
+// /* --- הגריד (כאן נקבע הגודל של התמונות) --- */
+// :host {
+//   display: block;
+// }
+
+// .pnd-grid {
+//   width: 96%; /* מתפרס על 96% מרוחב המסך! */
+//   max-width: 1600px; /* תומך במסכים ענקיים */
+//   margin: 0 auto;
+//   display: grid;
+//   grid-template-columns: repeat(4, minmax(0, 1fr));
+//   gap: 16px; /* הקטנו את הרווח כדי שהתמונות יתפסו יותר מקום */
+//   padding: 0 0 60px;
+// }
+
+// /* רספונסיביות */
+// @media (max-width: 1200px) {
+//   .pnd-grid {
+//     grid-template-columns: repeat(3, minmax(0, 1fr));
+//     gap: 16px;
+//   }
+// }
+
+// @media (max-width: 900px) {
+//   .pnd-grid {
+//     grid-template-columns: repeat(2, minmax(0, 1fr));
+//     gap: 12px;
+//   }
+// }
+
+// @media (max-width: 520px) {
+//   .pnd-grid {
+//     grid-template-columns: 1fr;
+//     gap: 12px;
+//   }
+// }
+
+/* --- עיצוב פירורי לחם (Breadcrumbs) --- */
+// .breadcrumbs {
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-start; /* מתחיל מצד ימין */
+//   gap: 8px;
+//   font-size: 13px;
+//   margin-bottom: 24px; /* מרחיק את זה מהכותרת הראשית */
+//   font-weight: 400;
+// }
+
+// .breadcrumb-link {
+//   color: #27251F;
+//   text-decoration: none;
+//   cursor: pointer;
+
+//   &:hover {
+//     text-decoration: underline; /* קו תחתון במעבר עכבר */
+//   }
+// }
+
+// .separator {
+//   color: #767676; /* אפור עדין ללוכסן */
+//   font-size: 12px;
+// }
+
+// .breadcrumb-current {
+//   color: #767676; /* השלב הנוכחי תמיד באפור */
+// }
+
+// /* --- אזור הכותרות הראשי --- */
+// .header-section {
+//   width: 96%; /* מתפרס על רוב המסך בהתאמה לגריד */
+//   max-width: 1600px;
+//   margin: 40px auto 40px; 
+// }
+
+// /* העטיפה שמיישרת הכל לימין עבור הקטגוריות */
+// .category-content {
+//   text-align: right; 
+// }
+
+// .search-title {
+//   font-size: 32px;
+//   font-weight: 500;
+//   color: #27251F; /* צבע אפור כהה-פחם יוקרתי */
+//   margin: 0;
+//   text-align: center; /* החיפוש נשאר באמצע המסך */
+// }
+
+// .category-title {
+//   font-size: 42px;
+//   font-weight: 600;
+//   color: #27251F;
+//   margin: 0 0 16px 0;
+//   text-transform: uppercase;
+// }
+
+// .category-desc {
+//   font-size: 15px;
+//   line-height: 1.6;
+//   color: #555; /* צבע קצת יותר בהיר לתיאור */
+//   max-width: 650px;
+
+//   p {
+//     display: inline;
+//     margin: 0;
+//   }
+// }
+
+// .read-more-btn {
+//   background: none;
+//   border: none;
+//   padding: 0;
+//   margin-right: 6px; /* רווח קטן מהטקסט */
+//   font-size: 14px;
+//   color: #27251F;
+//   text-decoration: underline;
+//   cursor: pointer;
+//   font-family: inherit;
+
+//   &:hover {
+//     color: #000;
+//   }
+// }
+
+// /* --- הגריד (כאן נקבע הגודל של התמונות והרווחים) --- */
+// :host {
+//   display: block;
+// }
+
+// .pnd-grid {
+//   width: 96%; /* מתפרס על רוב המסך */
+//   max-width: 1600px;
+//   margin: 0 auto;
+//   display: grid;
+//   grid-template-columns: repeat(4, minmax(0, 1fr));
+  
+//   /* כאן הקסם: 80px רווח בין השורות (למעלה ולמטה), 24px רווח בין העמודות (בצדדים) */
+//   gap: 80px 24px; 
+  
+//   padding: 0 0 80px;
+// }
+
+// /* רספונסיביות - שומרים על רווח יפה גם במסכים קטנים יותר */
+// @media (max-width: 1200px) {
+//   .pnd-grid {
+//     grid-template-columns: repeat(3, minmax(0, 1fr));
+//     gap: 60px 20px; /* קצת מקטינים את הרווח כשהמסך קטן */
+//   }
+// }
+
+// @media (max-width: 900px) {
+//   .pnd-grid {
+//     grid-template-columns: repeat(2, minmax(0, 1fr));
+//     gap: 50px 16px;
+//   }
+// }
+
+// @media (max-width: 520px) {
+//   .pnd-grid {
+//     grid-template-columns: 1fr;
+//     gap: 40px 16px;
+//   }
+// }
+
+// /* אם נשאר אצלך wrapper ישן בשם pnd-col */
+// .pnd-col {
+//   display: block;
+// }
+/* --- עיצוב פירורי לחם (Breadcrumbs) --- */
+///////////////////////////////////////////////////////////////////////////////
+// /// 
+// :host {
+//   display: block;
+//   /* הגדרת הפונט רק לקומפוננטה הזו */
+//   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+// }
+
+// /* חשוב: לוודא שאלמנטים פנימיים כמו כפתורים ואיונפוטים יירשו את הפונט מהמארח */
+// button, input, select, textarea {
+//   font-family: inherit;
+// }
+// .breadcrumbs {
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-start;
+//   gap: 8px;
+//   font-size: 14px;
+//   margin-bottom: 24px;
+//   font-weight: 400;
+// }
+
+// .breadcrumb-link {
+//   color: #27251F;
+//   text-decoration: none;
+//   cursor: pointer;
+
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// }
+
+// .separator {
+//   color: #767676;
+//   font-size: 12px;
+// }
+
+// .breadcrumb-current {
+//   color: #767676;
+// }
+
+// /* --- אזור הכותרות הראשי --- */
+// .header-section {
+//   width: 96%;
+//   max-width: 1600px;
+//   margin: 40px auto 40px; 
+// }
+
+// .category-content {
+//   text-align: right; 
+// }
+
+// .search-title {
+//   font-size: 32px;
+//   font-weight: 500;
+//   color: #27251F;
+//   margin: 0;
+//   text-align: center;
+// }
+
+// .category-title {
+//   font-size: 42px;
+//   font-weight: 600;
+//   color: #27251F;
+//   margin: 0 0 16px 0;
+//   text-transform: uppercase;
+// }
+
+// .category-desc {
+//   font-size: 19px;
+//   line-height: 1.6;
+//   color: #555;
+//   max-width: 650px;
+
+//   p {
+//     display: inline;
+//     margin: 0;
+//   }
+// }
+
+// .read-more-btn {
+//   background: none;
+//   border: none;
+//   padding: 0;
+//   margin-right: 6px;
+//   font-size: 14px;
+//   color: #27251F;
+//   text-decoration: underline;
+//   cursor: pointer;
+//   font-family: inherit;
+
+//   &:hover {
+//     color: #000;
+//   }
+// }
+
+// /* --- הגריד (כאן נקבע הגודל של התמונות והרווחים) --- */
+// :host {
+//   display: block;
+// }
+
+// .pnd-grid {
+//   width: 96%;
+//   max-width: 1600px;
+//   margin: 0 auto;
+//   display: grid;
+//   grid-template-columns: repeat(4, minmax(0, 1fr));
+  
+//   /* כאן השינוי: 80px רווח לגובה, ורק 6px רווח לצדדים (אופקי) צפוף ויפה! */
+//   gap: 93px 16px; 
+  
+//   padding: 0 0 80px;
+// }
+
+// /* רספונסיביות - שומרים על הפרופורציות גם במסכים קטנים */
+// @media (max-width: 1200px) {
+//   .pnd-grid {
+//     grid-template-columns: repeat(3, minmax(0, 1fr));
+//     gap: 88px 16px; 
+//   }
+// }
+
+// @media (max-width: 900px) {
+//   .pnd-grid {
+//     grid-template-columns: repeat(2, minmax(0, 1fr));
+//     gap: 100px 16px;
+//   }
+// }
+
+// @media (max-width: 520px) {
+//   .pnd-grid {
+//     grid-template-columns: 1fr;
+//     gap: 100px 16px;
+//   }
+// }
+
+// .pnd-col {
+//   display: block;
+// }
+///////////////////////////////////////////////////////////////////////////////////////////
+// /// 
+// :host {
+//   display: block;
+//   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+// }
+
+// button, input, select, textarea {
+//   font-family: inherit;
+// }
+
+// .breadcrumbs {
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-start;
+//   gap: 8px;
+//   font-size: 14px;
+//   margin-bottom: 24px;
+//   font-weight: 400;
+// }
+
+// .breadcrumb-link {
+//   color: #27251F;
+//   text-decoration: none;
+//   cursor: pointer;
+
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// }
+
+// .separator {
+//   color: #767676;
+//   font-size: 12px;
+// }
+
+// .breadcrumb-current {
+//   color: #767676;
+// }
+
+// .header-section {
+//   width: 96%;
+//   max-width: 1600px;
+//   margin: 40px auto 40px; 
+// }
+
+// .category-content {
+//   text-align: right; 
+// }
+
+// .search-title {
+//   font-size: 32px;
+//   font-weight: 500;
+//   color: #27251F;
+//   margin: 0;
+//   text-align: center;
+// }
+
+// .category-title {
+//   font-size: 42px;
+//   font-weight: 600;
+//   color: #27251F;
+//   margin: 0 0 16px 0;
+//   text-transform: uppercase;
+// }
+
+// .category-desc {
+//   font-size: 19px;
+//   line-height: 1.6;
+//   color: #555;
+//   max-width: 650px;
+
+//   p {
+//     display: inline;
+//     margin: 0;
+//   }
+// }
+
+// .read-more-btn {
+//   background: none;
+//   border: none;
+//   padding: 0;
+//   margin-right: 6px;
+//   font-size: 14px;
+//   color: #27251F;
+//   text-decoration: underline;
+//   cursor: pointer;
+//   font-family: inherit;
+
+//   &:hover {
+//     color: #000;
+//   }
+// }
+
+// /* === אזור סרגל הסינון החדש === */
+// .filter-toolbar {
+//   width: 96%;
+//   max-width: 1600px;
+//   margin: 0 auto 32px auto;
+//   border-top: 1px solid #e5e5e5;
+//   border-bottom: 1px solid #e5e5e5;
+//   padding: 12px 0;
+//   display: flex;
+//   justify-content: flex-start; /* מצמיד שמאלה ב-RTL (או ימינה אם תרצי, שני ל-flex-end) */
+// }
+
+// .filter-sort-btn {
+//   background: transparent;
+//   border: none;
+//   color: #27251F;
+//   font-size: 15px;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   gap: 10px; /* רווח בין האיקון לטקסט */
+//   padding: 0 8px;
+
+//   &:hover {
+//     color: #000;
+//   }
+
+//   i {
+//     font-size: 18px;
+//   }
+// }
+// /* ============================= */
+
+// .pnd-grid {
+//   width: 96%;
+//   max-width: 1600px;
+//   margin: 0 auto;
+//   display: grid;
+//   grid-template-columns: repeat(4, minmax(0, 1fr));
+//   gap: 93px 16px; 
+//   padding: 0 0 80px;
+// }
+
+// @media (max-width: 1200px) {
+//   .pnd-grid {
+//     grid-template-columns: repeat(3, minmax(0, 1fr));
+//     gap: 88px 16px; 
+//   }
+// }
+
+// @media (max-width: 900px) {
+//   .pnd-grid {
+//     grid-template-columns: repeat(2, minmax(0, 1fr));
+//     gap: 100px 16px;
+//   }
+// }
+
+// @media (max-width: 520px) {
+//   .pnd-grid {
+//     grid-template-columns: 1fr;
+//     gap: 100px 16px;
+//   }
+// }
+
+// .pnd-col {
+//   display: block;
+// }
+
+/* --- עיצוב כללי של העמוד --- */
 :host {
   display: block;
+  font-family: 'Assistant', sans-serif;
 }
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.breadcrumb-link {
+  color: #27251F;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.separator {
+  color: #767676;
+  font-size: 12px;
+}
+
+.breadcrumb-current {
+  color: #767676;
+}
+
+.header-section {
+  width: 96%;
+  max-width: 1600px;
+  margin: 40px auto 40px; 
+}
+
+.category-content {
+  text-align: right; 
+}
+
+.search-title {
+  font-size: 32px;
+  font-weight: 500;
+  color: #27251F;
+  margin: 0;
+  text-align: center;
+}
+
+.category-title {
+  font-size: 42px;
+  font-weight: 600;
+  color: #27251F;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+}
+
+.category-desc {
+  font-size: 19px;
+  line-height: 1.6;
+  color: #555;
+  max-width: 650px;
+
+  p {
+    display: inline;
+    margin: 0;
+  }
+}
+
+.read-more-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-right: 6px;
+  font-size: 14px;
+  color: #27251F;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+/* === אזור סרגל הסינון החדש === */
+.filter-toolbar-wrapper {
+  width: 100%;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 18.5px; /* דוחף את הכפתורים למטה הרחק מהקו! */
+  margin-bottom:  0 0px; /* רווח נעים מהמוצרים שמתחת */
+}
+.filter-toolbar {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto 32px auto;
+  /* מחיקת ה- border-bottom לפי הבקשה שלך כדי שיהיה קו אחד בלבד! */
+  padding: 1px ;
+  display: flex;
+  align-items: center; /* מוודא שכולם יושבים באותו קו גובה */
+  justify-content: flex-start; 
+}
+
+.filter-sort-btn {
+  background: transparent;
+  border: none;
+  color: #555;;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  padding: 0 8px;
+
+  &:hover {
+    color: #000;
+  }
+
+  i {
+    font-size: 18px;
+  }
+}
+
+/* הקו האפור האנכי המפריד */
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background-color: #e5e5e5;
+  margin: 0 24px;
+}
+
+/* אזור הצ'קבוקסים */
+.quick-filters {
+  display: flex;
+  gap: 32px; /* רווח יפה בין שני הצ'קבוקסים */
+  align-items: center;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555; /* צבע טקסט עדין */
+
+  &:hover {
+    color: #000;
+  }
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #ffb6c1;
+  }
+}
+/* ============================= */
 
 .pnd-grid {
-  width: min(1200px, calc(100% - 120px)); /* יותר רווחים בצדדים */
-  margin: 0 auto; /* מרכז */
+  width: 96%;
+  max-width: 1600px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 36px; /* רווח בין כרטיסים */
-  padding: 24px 0 60px;
+  gap: 93px 16px; 
+  padding: 0 0 80px;
 }
 
-/* רספונסיביות */
 @media (max-width: 1200px) {
   .pnd-grid {
-    width: min(1100px, calc(100% - 80px));
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px;
+    gap: 88px 16px; 
   }
 }
 
 @media (max-width: 900px) {
   .pnd-grid {
-    width: calc(100% - 40px);
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
+    gap: 100px 16px;
   }
 }
 
 @media (max-width: 520px) {
   .pnd-grid {
-    width: calc(100% - 24px);
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 100px 16px;
   }
 }
 
-/* אם נשאר אצלך wrapper ישן בשם pnd-col */
 .pnd-col {
   display: block;
+}
+
+/* ========================================== */
+/* עיצוב התפריט צד (Sidebar) המותאם אישית שלנו */
+/* ========================================== */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4); 
+  z-index: 999; 
+}
+
+.custom-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0; 
+  width: 500px; 
+  max-width: 100vw; 
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 1000;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  
+  transform: translateX(100%); 
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e5e5;
+
+  // h2 {
+  //   margin: 0;
+  //   font-size: 20px;
+  //   font-weight: 500;
+  //   color: #27251F;
+  // }
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #767676;
+  cursor: pointer;
+  padding: 4px;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto; 
+  padding: 24px;
+}
+
+/* עיצוב לאנימציית הטעינה בזמן גלילה (Infinite Scroll) */
+.loading-more-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 0 80px 0;
+  color: #767676;
+  font-size: 16px;
+
+  i {
+    font-size: 24px;
+    color: #27251F; /* שחור עדין */
+  }
 }
