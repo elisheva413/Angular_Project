@@ -1,36 +1,5 @@
-<!-- <div class="card">
-  <div
-    class="media"
-    (mouseenter)="onEnter()"
-    (mouseleave)="onLeave()"
-    (touchstart)="onTouchToggle($event)"
-  >
-<img class="img" [src]="currentImageSrc" [alt]="product?.productsName" />
-    <button
-      pButton
-      type="button"
-      icon="pi pi-shopping-bag"
-      class="cart-btn p-button-rounded p-button-text"
-      (click)="onAddToCartClick($event)"
-      aria-label="הוספה לסל"
-    ></button>
 
-    <button
-      type="button"
-      class="wish-btn"
-      aria-label="מועדפים"
-      (click)="$event.stopPropagation()"
-    >
-      ♥
-    </button>
-  </div>
-
-  <div class="info">
-    <div class="name">{{ product?.productsName }}</div>
-    <div class="price">₪{{ product?.price }}</div>
-  </div>
-</div> -->
-
+<!-- 
 <div class="card">
   <div
     class="media"
@@ -52,6 +21,35 @@
 
   <div class="info">
     <div class="name">{{ product?.productsName }}</div>
+    <div class="price">₪{{ product?.price }}</div>
+  </div>
+</div> -->
+
+<div class="card">
+  <div
+    class="media"
+    (mouseenter)="onEnter()"
+    (mouseleave)="onLeave()"
+    (touchstart)="onTouchToggle($event)"
+  >
+    <a [routerLink]="['/products', product?.productsId]" class="img-wrapper-link">
+      <img class="img" [src]="currentImageSrc" [alt]="product?.productsName" />
+    </a>
+
+    <button
+      type="button"
+      class="top-cart-btn"
+      (click)="onAddToCartClick($event)"
+      aria-label="הוספה לסל"
+    >
+      <i class="pi pi-shopping-bag"></i>
+    </button>
+  </div>
+
+  <div class="info">
+    <a [routerLink]="['/products', product?.productsId]" class="name-link">
+      <div class="name">{{ product?.productsName }}</div>
+    </a>
     <div class="price">₪{{ product?.price }}</div>
   </div>
 </div>

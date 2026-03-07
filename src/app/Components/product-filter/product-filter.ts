@@ -117,7 +117,7 @@ export class ProductFilter {
     { name: 'מתכת בשילוב כסף וציפוי זהב 14k', value: 'מתכת בשילוב כסף וציפוי זהב 14k', cssClass: 'mat-silver-gold' },
     { name: 'מתכת בשילוב כסף וציפוי רוז גולד 14K', value: 'מתכת בשילוב כסף וציפוי רוז גולד 14K', cssClass: 'mat-silver-rose' },
     { name: 'ציפוי זהב 14k', value: 'ציפוי זהב 14k', cssClass: 'mat-gold' },
-    { name: 'ציפוי זהב רוז גולד 14K', value: 'ציפוי זהב רוז גולד 14K', cssClass: 'mat-rose' },
+    { name: 'ציפוי רוז גולד 14K', value: 'ציפוי רוז גולד 14K', cssClass: 'mat-rose' },
     { name: 'ציפוי רותניום', value: 'ציפוי רותניום', cssClass: 'mat-ruthenium' }
   ];
 
