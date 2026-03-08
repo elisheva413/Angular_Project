@@ -4,10 +4,6 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
 import { routes } from './app.routes';
 import {  provideHttpClient } from '@angular/common/http';
-
-
-
-
 export const appConfig: ApplicationConfig = {
   providers: [
      provideRouter(
@@ -21,7 +17,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
         providePrimeNG({
       theme: {
-        preset: Aura
+        preset: Aura,
+         options: {
+            darkModeSelector: false 
+        }
       }
     }),
     provideBrowserGlobalErrorListeners(),

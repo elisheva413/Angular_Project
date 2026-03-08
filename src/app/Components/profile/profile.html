@@ -1,0 +1,54 @@
+<div class="profile-wrapper" dir="rtl">
+  <p-toast></p-toast>
+  
+  <div class="profile-card" *ngIf="isLoggedIn">
+    <div class="profile-header">
+      <i class="pi pi-user profile-icon"></i>
+      <h2>האזור האישי שלי</h2>
+      <p>כאן תוכלי לצפות ולעדכן את הפרטים האישיים שלך</p>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="firstName">שם פרטי</label>
+        <input id="firstName" type="text" pInputText [(ngModel)]="userData.firstName" />
+      </div>
+      
+      <div class="form-group">
+        <label for="lastName">שם משפחה</label>
+        <input id="lastName" type="text" pInputText [(ngModel)]="userData.lastName" />
+      </div>
+
+      <div class="form-group full-width">
+        <label for="email">אימייל</label>
+        <input id="email" type="email" pInputText [(ngModel)]="userData.email" disabled class="p-disabled" />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">טלפון</label>
+        <input id="phone" type="text" pInputText [(ngModel)]="userData.phone" />
+      </div>
+
+      <div class="form-group">
+        <label for="address">כתובת</label>
+        <input id="address" type="text" pInputText [(ngModel)]="userData.address" />
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button pButton label="שמירה שינויים" icon="pi pi-save" class="pink-btn" (click)="onSave()"></button>
+    </div>
+  </div>
+
+  <div class="profile-card" *ngIf="!isLoggedIn" style="text-align: center;">
+    <div class="profile-header">
+      <i class="pi pi-user-minus profile-icon" style="background-color: #f1f5f9; color: #94a3b8;"></i>
+      <h2>אין משתמש מחובר</h2>
+      <p>כדי לצפות ולערוך את האזור האישי, עליך להתחבר למערכת.</p>
+    </div>
+    <div class="action-buttons">
+      <button pButton label="מעבר להרשמה / התחברות" icon="pi pi-sign-in" routerLink="/login"></button>
+    </div>
+  </div>
+
+</div>
