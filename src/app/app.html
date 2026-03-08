@@ -1,124 +1,19 @@
-<div class="app-wrapper">
+<app-menu></app-menu>
+
+<router-outlet></router-outlet>
+<a routerLink="/products"></a>
+
+ <app-footer></app-footer>
+
+
+
+
+<!-- //<div class="app-wrapper">
   <app-menu></app-menu>
   
   <div class="content-area">
     <router-outlet></router-outlet>
   </div>
 
-  <footer class="pandora-footer">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4 (click)="toggleSection('shop')">
-          SHOP
-          <span class="mobile-plus">{{ openSection === 'shop' ? '-' : '+' }}</span>
-        </h4>
-        <ul [class.open]="openSection === 'shop'">
-          <li>צ'ארמס</li>
-          <li>צמידים</li>
-          <li>טבעות</li>
-          <li>שרשראות</li>
-          <li>עגילים</li>
-          <li>תכשיטי חריטה</li>
-          <li>מתנות</li>
-          <li>DISNEY X PANDORA</li>
-          <li>GIFT CARD</li>
-        </ul>
-      </div>
 
-      <div class="footer-col">
-        <h4 (click)="toggleSection('services')">
-          שירותים
-          <span class="mobile-plus">{{ openSection === 'services' ? '-' : '+' }}</span>
-        </h4>
-        <ul [class.open]="openSection === 'services'">
-          <li>
-            <a routerLink="/stores" class="footer-link">סניפי הרשת</a>
-          </li>
-          <li>קריירה בפנדורה</li>
-          <li>שאלות ותשובות</li>
-          <li>מדיניות פרטיות</li>
-          <li>שאלות ותשובות - חריטה</li>
-          <li>אחריות תכשיטים</li>
-          <li>
-            <a routerLink="/terms" class="footer-link">תקנון האתר</a>
-          </li>
-          <li>בלוג תכשיטים ואופנה</li>
-          <li>התכשיטים שלנו</li>
-          <li>צרו קשר</li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4 (click)="toggleSection('info')">
-          מידע שימושי
-          <span class="mobile-plus">{{ openSection === 'info' ? '-' : '+' }}</span>
-        </h4>
-        <ul [class.open]="openSection === 'info'">
-          <li>תקנון מועדון לקוחות</li>
-          <li>אודות פנדורה</li>
-          <li>מדיניות החזרות/החלפות</li>
-          <li>מדיניות משלוחים</li>
-          <li>ניקוי תכשיטים</li>
-          <li>ביטול עסקה</li>
-          <li>הצהרת נגישות</li>
-          <li>תקנון פעילות אינסטגרם</li>
-          <li>תקנון הטבת ולנטיין</li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4 (click)="toggleSection('personal')">
-          איזור אישי
-          <span class="mobile-plus">{{ openSection === 'personal' ? '-' : '+' }}</span>
-        </h4>
-        <ul [class.open]="openSection === 'personal'">
-        <li>
-          <a routerLink="/register" class="footer-link">כניסה והרשמה</a>
-        </li>
-          <li>החשבון שלי</li>
-          <li>בדיקת יתרת גיפט קארד</li>
-          <li>ההזמנות שלי</li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4 (click)="toggleSection('contact')">
-          צרו קשר
-          <span class="mobile-plus">{{ openSection === 'contact' ? '-' : '+' }}</span>
-        </h4>
-        <ul [class.open]="openSection === 'contact'">
-          <li>כתבו לנו</li>
-          <li>Whatsapp</li>
-          <li>Facebook</li>
-          <li>Instagram</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-side-icons">
-      <div class="side-icon-item">
-        <i class="pi pi-id-card"></i>
-        <span>GIFT CARD</span>
-      </div>
-      <div class="side-icon-item">
-        <i class="pi pi-map-marker"></i>
-        <span>הסניפים שלנו</span>
-      </div>
-      <div class="side-icon-item">
-        <i class="pi pi-briefcase"></i>
-        <span>בואו לעבוד איתנו</span>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="social-links">
-        <i class="pi pi-facebook"></i>
-        <i class="pi pi-youtube"></i>
-        <i class="pi pi-instagram"></i>
-        <i class="pi pi-pinterest"></i>
-      </div>
-      <img src="images/logo.png" alt="Pandora" class="footer-logo-img">
-      <p>Pandora 2026 © | Developed by Elisheva Polski & Zehavi Kornvasser</p>
-    </div>
-  </footer>
-</div>
+</div> -->

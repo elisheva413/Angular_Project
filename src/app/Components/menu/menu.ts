@@ -1,69 +1,94 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common'; 
+import { Component, OnInit, inject, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common'; // ייבוא חשוב בשביל *ngIf
 import { MenubarModule } from 'primeng/menubar';
-import { MenuModule } from 'primeng/menu'; 
+import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { RouterModule, Router } from '@angular/router'; 
+import { RouterModule, Router, NavigationEnd } from '@angular/router'; 
+import { FormsModule } from '@angular/forms'; 
+import { filter } from 'rxjs/operators';
 import { CartService } from '../../Services/cart-service';
-import { CartItem } from '../../Models/Cart-Model';
-
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
   standalone: true,
-  imports: [CommonModule, MenubarModule, MenuModule, RouterModule] 
+  // הוספתי כאן את ה-CommonModule שהיה חסר!
+  imports: [CommonModule, MenubarModule, MenuModule, RouterModule, FormsModule] 
 })
-
 export class Menu implements OnInit {
-  private router = inject(Router); 
+  private router = inject(Router);
   private cartService = inject(CartService);
-  items: MenuItem[] | undefined; 
+
+  cartItemCount: number = 0;
+
+  items: MenuItem[] | undefined;
   userMenuItems: MenuItem[] | undefined; 
-  cartCount: number = 0; 
+  searchQuery: string = '';
+
+  isHeaderHidden = false; 
+  isScrolled = false; 
+  lastScrollTop = 0; 
+  isHomePage = false; 
+  isTransparent = false; 
 
   ngOnInit() {
-    this.cartService.cart$.subscribe(() => {
-      this.cartCount = this.cartService.getCartCount();
+    const checkRoute = (url: string) => {
+      const cleanUrl = url.split('#')[0].split('?')[0]; 
+      
+      this.isHomePage = cleanUrl === '/' || cleanUrl === '' || cleanUrl === '/home';
+      this.checkTransparency();
+    };
+
+    checkRoute(this.router.url);
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      checkRoute(event.urlAfterRedirects || event.url);
     });
 
-    
-    this.items = [
-      { label: 'Home', icon: 'pi pi-home' },
-      { label: 'Product', icon: 'pi pi-star' },
-      {
-        label: 'Projects',
-        icon: 'pi pi-search',
-        items: [
-          { label: 'Components', icon: 'pi pi-bolt' },
-          { label: 'Blocks', icon: 'pi pi-server' },
-          { label: 'UI Kit', icon: 'pi pi-pencil' },
-          {
-            label: 'Templates',
-            icon: 'pi pi-palette',
-            items: [
-              { label: 'Apollo', icon: 'pi pi-palette' },
-              { label: 'Ultima', icon: 'pi pi-palette' }
-            ]
-          }
-        ]
-      },
-      { label: 'Contact', icon: 'pi pi-envelope' }
+    this.userMenuItems = [
+      { label: 'אזור אישי', icon: 'pi pi-user', routerLink: '/profile' },
+      { label: 'התנתקות', icon: 'pi pi-sign-out', command: () => this.logout() }
     ];
 
-    this.userMenuItems = [
-      {
-        label: 'אזור אישי',
-        icon: 'pi pi-user',
-        routerLink: '/profile' 
-      },
-      {
-        label: 'התנתקות',
-        icon: 'pi pi-sign-out',
-        command: () => this.logout() 
-      }
-    ];
+    this.cartService.cart$.subscribe(items => {
+      this.cartItemCount = items.reduce((sum, item) => sum + item.selectedQuantity, 0);
+    });
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    
+    this.isScrolled = currentScroll > 50;
+    this.checkTransparency(); 
+
+    if (currentScroll <= 50) {
+      this.isHeaderHidden = false;
+      this.lastScrollTop = currentScroll;
+      return;
+    }
+
+    if (currentScroll > this.lastScrollTop) {
+      this.isHeaderHidden = true; 
+    } else {
+      this.isHeaderHidden = false; 
+    }
+
+    this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  }
+
+  checkTransparency() {
+    this.isTransparent = this.isHomePage && !this.isScrolled;
+  }
+
+  onSearch() {
+    if (this.searchQuery && this.searchQuery.trim() !== '') {
+      this.router.navigate(['/products'], { queryParams: { q: this.searchQuery.trim() } });
+      this.searchQuery = ''; 
+    }
   }
 
   logout() {

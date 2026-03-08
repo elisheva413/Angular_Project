@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://localhost:44382/api/Users';
+  private apiUrl = 'https://localhost:44360/api/Users';
 
   constructor(private http: HttpClient) { }
   login(credentials: any): Observable<any> {

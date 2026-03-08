@@ -3,15 +3,14 @@
     <div class="footer-col">
       <h4>SHOP</h4>
       <ul>
-        <li>צ'ארמס</li>
-        <li>צמידים</li>
-        <li>טבעות</li>
-        <li>שרשראות</li>
-        <li>עגילים</li>
-        <li>תכשיטי חריטה</li>
-        <li>מתנות</li>
-        <li>DISNEY X PANDORA</li>
-        <li>GIFT CARD</li>
+        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 110 }">צ'ארמס</a></li>
+        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 105 }">צמידים</a></li>
+        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 100 }">טבעות</a></li>
+        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 115 }">שרשראות</a></li>
+        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 120 }">עגילים</a></li>
+        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 130 }">תכשיטי חריטה</a></li>
+        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 901 }">מתנות</a></li>
+        <li><a href="#">DISNEY X PANDORA</a></li> <li><a [routerLink]="['/gift-card']">GIFT CARD</a></li>
       </ul>
     </div>
 
@@ -68,11 +67,11 @@
   </div>
 
   <div class="footer-icons-row">
-    <div class="icon-item">
+    <div class="icon-item" routerLink="/gift-card" style="cursor: pointer;">
       <i class="pi pi-id-card"></i>
       <span>GIFT CARD</span>
     </div>
-    <div class="icon-item">
+    <div class="icon-item" routerLink="/stores" style="cursor: pointer;">
       <i class="pi pi-map-marker"></i>
       <span>הסניפים שלנו</span>
     </div>

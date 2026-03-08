@@ -231,6 +231,7 @@
       height: 25px !important; 
     }
 
+    /* מסתירים את תיבת החיפוש במובייל, אבל משאירים את הדיב הריק כדי שהלוגו יישאר ממורכז */
     .search-container {
       display: none;    
     }
@@ -240,5 +241,3 @@
     display: none; 
   }
 }
-
-

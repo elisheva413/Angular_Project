@@ -1,88 +1,85 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ProductModel } from '../Models/Products-Model';
 import { CartItem } from '../Models/Cart-Model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CartService {
-  private cartItems: CartItem[] = [];
-  private cartSubject = new BehaviorSubject<CartItem[]>([]);
+  
+  // טוען את הסל מהלוקל סטורג' מיד כשהאפליקציה עולה
+  private cartSubject = new BehaviorSubject<CartItem[]>(this.loadCart());
   cart$ = this.cartSubject.asObservable();
 
-  constructor() {
-    this.loadFromStorage();
-  }
-
-  // טעינה מה-LocalStorage או טעינת מערך דוגמה אם הסל ריק
-  private loadFromStorage() {
-    const savedCart = localStorage.getItem('p_cart');
+  // 1. הוספה לסל (ובדיקת מלאי)
+  addToCart(product: ProductModel, qty: number = 1) {
+    let currentCart = this.cartSubject.value;
+    const existingItem = currentCart.find(item => item.product.productsId === product.productsId);
     
-    if (savedCart && JSON.parse(savedCart).length > 0) {
-      this.cartItems = JSON.parse(savedCart);
-    } else {
-     
-      this.cartItems = [
-        { 
-          productId: 1, 
-          productName: 'צמיד Pandora Moments', 
-          price: 299, 
-          imgUrl: 'bracelet1.png', 
-          selectedQuantity: 1 
-        },
-        { 
-          productId: 2, 
-          productName: "צ'ארם לב כסף סטרלינג", 
-          price: 159, 
-          imgUrl: 'charm1.png', 
-          selectedQuantity: 2 
-        }
-      ];
-      this.saveToStorage();
+    const currentQtyInCart = existingItem ? existingItem.selectedQuantity : 0;
+    const totalRequested = currentQtyInCart + qty;
+
+    // בדיקת מלאי פשוטה
+    if (totalRequested > product.quantity) {
+      alert(`מצטערים, המלאי מוגבל ל-${product.quantity} יחידות`);
+      return;
     }
-    this.cartSubject.next([...this.cartItems]);
-  }
 
-  private saveToStorage() {
-    localStorage.setItem('p_cart', JSON.stringify(this.cartItems));
-    this.cartSubject.next([...this.cartItems]);
-  }
-
-
-  addToCart(product: any) {
-    const existingItem = this.cartItems.find(item => item.productId === product.productId);
     if (existingItem) {
-      existingItem.selectedQuantity++;
+      existingItem.selectedQuantity = totalRequested;
     } else {
-      this.cartItems.push({
-        productId: product.productId,
-        productName: product.productName,
-        price: product.price,
-        imgUrl: product.imgUrl,
-        selectedQuantity: 1
-      });
+      currentCart.push({ product, selectedQuantity: qty });
     }
-    this.saveToStorage();
+
+    this.saveAndRefresh(currentCart);
   }
 
-  updateQuantity(productId: number, quantity: number) {
-    const item = this.cartItems.find(i => i.productId === productId);
-    if (item && quantity > 0) {
-      item.selectedQuantity = quantity;
-      this.saveToStorage();
+  // 2. עדכון כמות (הפונקציה שהייתה חסרה!)
+  updateQuantity(productId: number, newQty: number) {
+    let currentCart = this.cartSubject.value;
+    const item = currentCart.find(i => i.product.productsId === productId);
+    
+    if (item) {
+      if (newQty > item.product.quantity) {
+        alert(`ניתן להזמין עד ${item.product.quantity} יחידות`);
+        item.selectedQuantity = item.product.quantity;
+      } else {
+        item.selectedQuantity = newQty;
+      }
+      this.saveAndRefresh(currentCart);
     }
   }
 
+  // 3. מחיקת פריט מהסל (הפונקציה שהייתה חסרה!)
   removeItem(productId: number) {
-    this.cartItems = this.cartItems.filter(item => item.productId !== productId);
-    this.saveToStorage();
+    const updatedCart = this.cartSubject.value.filter(item => item.product.productsId !== productId);
+    this.saveAndRefresh(updatedCart);
   }
 
+  // 4. חישוב סכום כולל (הפונקציה שהייתה חסרה!)
   getTotalPrice(): number {
-    return this.cartItems.reduce((total, item) => total + (item.price * item.selectedQuantity), 0);
+    return this.cartSubject.value.reduce((total, item) => total + (item.product.price * item.selectedQuantity), 0);
   }
 
-  getCartCount(): number {
-    return this.cartItems.reduce((count, item) => count + item.selectedQuantity, 0);
+  // שומר ללוקל סטורג' ומעדכן את כולם
+  private saveAndRefresh(cart: CartItem[]) {
+    localStorage.setItem('p_cart', JSON.stringify(cart));
+    this.cartSubject.next([...cart]);
   }
+
+  // שולף מהלוקל סטורג'
+  private loadCart(): CartItem[] {
+    const saved = localStorage.getItem('p_cart');
+    return saved ? JSON.parse(saved) : [];
+  }
+
+  // פונקציה לריקון הסל אחרי רכישה מוצלחת
+clearCart() {
+  // 1. מעדכנים את ה-BehaviorSubject למערך ריק כדי שכל האתר יתעדכן
+  this.cartSubject.next([]);
+  
+  // 2. מנקים את ה-LocalStorage כדי שהסל לא יחזור בריענון דף
+  localStorage.removeItem('cart'); // ודאי שזה השם בו את שומרת את הסל
+  
+  console.log('🛒 הסל רוקן בהצלחה לאחר הרכישה');
+}
 }
