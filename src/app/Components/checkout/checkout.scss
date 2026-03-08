@@ -1,0 +1,222 @@
+$pandora-pink: #f7b0b9;
+$dark-text: #212121;
+$border-color: #ebebeb;
+
+.checkout-page {
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  padding: 40px 5%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .checkout-container {
+    max-width: 1100px;
+    margin: 0 auto;
+
+    .main-title {
+      font-size: 28px;
+      font-weight: 300;
+      margin-bottom: 30px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+  }
+
+  .checkout-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // --- אפשרויות תשלום (Accordion) ---
+  .payment-option {
+    background: white;
+    border: 1px solid $border-color;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+
+    .option-header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .radio-circle {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        position: relative;
+      }
+    }
+
+    &.open {
+      border-color: $pandora-pink;
+      .radio-circle::after {
+        content: '';
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 10px;
+        height: 10px;
+        background: black;
+        border-radius: 50%;
+      }
+    }
+
+    .option-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out;
+      padding: 0 20px;
+
+      &.centered { text-align: center; padding-bottom: 25px; }
+    }
+
+    &.open .option-content {
+      max-height: 500px;
+      padding-bottom: 25px;
+    }
+  }
+
+  // --- טופס אשראי ---
+  .credit-card-form {
+    .form-row {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 15px;
+      
+      &.split .input-group { flex: 1; }
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      label { font-size: 13px; margin-bottom: 5px; font-weight: 600; }
+      input {
+        padding: 12px;
+        border: 1px solid $border-color;
+        outline: none;
+        &:focus { border-color: $pandora-pink; }
+      }
+    }
+
+    .date-inputs {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      input { width: 60px; text-align: center; }
+    }
+  }
+
+  // --- כפתור פנדורה הקלאסי ---
+  .pandora-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: $pandora-pink;
+    border: none;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:active, &.loading {
+      background-color: black; // לחיצה הופכת לשחור
+    }
+  }
+
+  // --- סיכום הזמנה ---
+  .order-summary-card {
+    background: white;
+    border: 1px solid $border-color;
+    align-self: flex-start;
+
+    .summary-header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      background-color: #fcfcfc;
+      cursor: pointer;
+    }
+
+    .summary-content {
+      display: none;
+      padding: 20px;
+      &.show { display: block; }
+    }
+
+    .summary-table-header {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr;
+      font-size: 12px;
+      color: #777;
+      border-bottom: 1px solid $border-color;
+      padding-bottom: 10px;
+    }
+
+    .summary-item {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #f9f9f9;
+
+      .item-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .item-thumbnail { width: 50px; height: 50px; object-fit: cover; }
+        .item-name { font-size: 13px; }
+      }
+    }
+
+    .summary-footer {
+      margin-top: 20px;
+      .footer-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 14px;
+        &.grand-total {
+          font-weight: bold;
+          font-size: 18px;
+          border-top: 1px solid $border-color;
+          padding-top: 15px;
+        }
+      }
+    }
+  }
+}
+
+// Mock Buttons Style
+.paypal-mock-btn {
+  background: #ffc439;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  span { color: #003087; font-style: italic; }
+}
+
+.gpay-mock-btn {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 8px 25px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  img { height: 20px; }
+}

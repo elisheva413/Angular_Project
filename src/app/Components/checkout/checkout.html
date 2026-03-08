@@ -1,0 +1,129 @@
+<div class="checkout-page" dir="rtl">
+  <div class="checkout-container">
+    <h1 class="main-title">סיכום ותשלום</h1>
+
+    <div class="checkout-grid">
+      
+      <div class="payment-methods">
+        <h3 class="section-title">בחרי אמצעי תשלום</h3>
+
+        <div class="payment-option" [class.open]="selectedPayment === 'credit'">
+          <div class="option-header" (click)="togglePayment('credit')">
+            <div class="header-right">
+              <span class="radio-circle"></span>
+              <span class="option-text">כרטיס אשראי / דיירקט</span>
+            </div>
+            <i class="pi pi-credit-card"></i>
+          </div>
+          
+          <div class="option-content">
+            <div class="credit-card-form">
+              <div class="form-row">
+                <div class="input-group full">
+                  <label>מספר כרטיס *</label>
+                  <input type="text" placeholder="#### #### #### ####">
+                </div>
+              </div>
+              <div class="form-row split">
+                <div class="input-group">
+                  <label>שם בעל הכרטיס *</label>
+                  <input type="text">
+                </div>
+                <div class="input-group">
+                  <label>תאריך תפוגה *</label>
+                  <div class="date-inputs">
+                    <input type="text" placeholder="חודש">
+                    <span class="slash">/</span>
+                    <input type="text" placeholder="שנה">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="input-group small">
+                  <label>קוד אבטחה (CVV) *</label>
+                  <input type="password" placeholder="3 ספרות">
+                </div>
+              </div>
+              <button class="pandora-btn" [class.loading]="isSubmitting" (click)="placeOrder()">שלם כעת</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-option" [class.open]="selectedPayment === 'paypal'">
+          <div class="option-header" (click)="togglePayment('paypal')">
+            <div class="header-right">
+              <span class="radio-circle"></span>
+              <span class="option-text">PayPal™</span>
+            </div>
+            <i class="pi pi-paypal"></i>
+          </div>
+          <div class="option-content centered">
+            <p>לחצי על הכפתור למטה כדי להיכנס לפייפאל ולאשר את התשלום.</p>
+            <button class="paypal-mock-btn" (click)="placeOrder()">
+               <span>PayPal</span> שלם באמצעות
+            </button>
+          </div>
+        </div>
+
+        <div class="payment-option" [class.open]="selectedPayment === 'google'">
+          <div class="option-header" (click)="togglePayment('google')">
+            <div class="header-right">
+              <span class="radio-circle"></span>
+              <span class="option-text">Google Pay</span>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" class="gpay-icon-small">
+          </div>
+          <div class="option-content centered">
+            <p>לחצי על הכפתור למטה כדי לאשר את התשלום באמצעות Google Pay.</p>
+            <div class="gpay-mock-btn" (click)="placeOrder()">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="GPay">
+              <span class="plus">+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-summary-card">
+        <div class="summary-header" (click)="isSummaryOpen = !isSummaryOpen">
+          <h3>ההזמנה שלך</h3>
+          <i class="pi" [ngClass]="isSummaryOpen ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
+        </div>
+
+        <div class="summary-content" [class.show]="isSummaryOpen">
+          <div class="summary-table-header">
+            <span>פריט</span>
+            <span>כמות</span>
+            <span>מחיר</span>
+          </div>
+
+          <div class="summary-items-list">
+            <div *ngFor="let item of cartItems" class="summary-item">
+              <div class="item-info">
+                <img [src]="item.product.imgUrl" class="item-thumbnail">
+                <span class="item-name">{{ item.product.productsName }}</span>
+              </div>
+              <div class="item-qty">{{ item.selectedQuantity }}</div>
+              <div class="item-price">₪{{ (item.product.price * item.selectedQuantity) | number:'1.2-2' }}</div>
+            </div>
+          </div>
+
+          <div class="summary-footer">
+            <div class="footer-row">
+              <span>סכום ההזמנה</span>
+              <span>₪{{ getTotalPrice() | number:'1.2-2' }}</span>
+            </div>
+            <div class="footer-row">
+              <span>דמי משלוח</span>
+              <span>₪0.00</span>
+            </div>
+            <div class="footer-row grand-total">
+              <span>סך הכל</span>
+              <span>₪{{ getTotalPrice() | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

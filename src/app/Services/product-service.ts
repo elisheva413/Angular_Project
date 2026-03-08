@@ -1,11 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-// import { Observable, map } from 'rxjs';
 import { Observable, map, tap, catchError, throwError } from 'rxjs';
 import { ProductModel } from '../Models/Products-Model';
-import { ProductsResponse, ProductFilters } from '../Models/ProductApi-Model';
 
+// הגדרת המבנה שחוזר מה-API (חשוב מאוד בשביל ה-totalCount)
+export type ProductsResponse = {
+  items: ProductModel[];
+  totalCount: number;
+  hasNext: boolean;
+  hasPrev: boolean;
+};
 
+export interface ProductFilters {
+  categoryId?: number | number[];
+  q?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  color?: string;
+  material?: string;
+  inStock?: boolean;
+  isActive?: boolean;
+  sort?: string;
+  skip?: number;
+  position?: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -15,16 +33,19 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
+  // מביא את כל המוצרים ללא סינון
   getAllProducts(): Observable<ProductModel[]> {
     return this.http.get<ProductsResponse>(this.apiUrl).pipe(
-      map(r => r?.items ?? [])
+      map(res => res?.items ?? [])
     );
   }
+
+  // הפונקציה המרכזית - תומכת בסינונים, חיפוש וגלילה אינסופית
   getProducts(filters?: ProductFilters): Observable<ProductsResponse> {
     let params = new HttpParams();
 
     if (filters) {
-      // טיפול במערך קטגוריות
+      // טיפול בקטגוריות (תומך גם בבודד וגם במערך)
       if (filters.categoryId != null) {
         if (Array.isArray(filters.categoryId)) {
           filters.categoryId.forEach(id => {
@@ -35,7 +56,7 @@ export class ProductService {
         }
       }
 
-      // טיפול בשאר הפרמטרים
+      // שאר הפרמטרים
       if (filters.q) params = params.set('q', filters.q);
       if (filters.minPrice != null) params = params.set('minPrice', filters.minPrice.toString());
       if (filters.maxPrice != null) params = params.set('maxPrice', filters.maxPrice.toString());
@@ -48,24 +69,28 @@ export class ProductService {
       if (filters.position != null) params = params.set('position', filters.position.toString());
     }
 
-    console.log('🌐 שולח בקשה לשרת עם הפרמטרים:', params.toString());
-
-    // שימוש ב-pipe כדי לתפוס את התשובה או השגיאה מיד כשהן מגיעות
     return this.http.get<ProductsResponse>(this.apiUrl, { params }).pipe(
-      tap((response: ProductsResponse) => {
-        // tap לא משנה את הנתונים, רק מאפשר לנו "להציץ" בהם
-        console.log('✅ הנתונים התקבלו בהצלחה בתוך ה-Service:', response);
-      }),
-      catchError((error) => {
-        // catchError תופס שגיאות רשת או שגיאות בשרת
-        console.error('❌ שגיאה נתפסה בתוך ה-Service:', error);
-        // זורק את השגיאה הלאה לקומפוננטה כדי שגם היא תדע שנכשל
-        return throwError(() => error); 
+      tap(res => console.log('✅ נתונים התקבלו:', res)),
+      catchError(err => {
+        console.error('❌ שגיאת Service:', err);
+        return throwError(() => err);
       })
     );
   }
 
+  // מביא מוצר בודד לפי ID - קריטי לדף Single Product!
   getById(id: number): Observable<ProductModel> {
     return this.http.get<ProductModel>(`${this.apiUrl}/${id}`);
+  }
+
+  // מחיקה רכה - משנה את הסטטוס של המוצר ל-IsActive = false בשרת
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => console.log(`✅ מוצר ${id} הועבר למצב לא פעיל`)),
+      catchError(err => {
+        console.error('❌ שגיאה במחיקת מוצר:', err);
+        return throwError(() => err);
+      })
+    );
   }
 }

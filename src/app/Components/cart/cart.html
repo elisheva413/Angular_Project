@@ -57,7 +57,7 @@
           <span>סה"כ לתשלום:</span>
           <span>{{ getFinalTotal() | number:'1.2-2' }} ₪</span>
         </div>
-        <button class="simple-btn-checkout">המשך לתשלום</button>
+        <button class="simple-btn-checkout" (click)="proceedToCheckout()">המשך לתשלום</button>
       </div>
     </div>
 
