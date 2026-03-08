@@ -1,0 +1,49 @@
+<header class="pandora-header">
+  <div class="promo-bar">
+    משלוח חינם בקנייה מעל 299₪
+  </div>
+
+  <div class="middle-header">
+    <div class="header-left">
+      <div class="search-container">
+        <i class="pi pi-search"></i>
+        <input type="text" placeholder="חפשו את התכשיט הבא שלכם...">
+      </div>
+    </div>
+
+    <div class="header-center">
+      <img src="images/logo.png" alt="Pandora" class="main-logo" routerLink="/" style="cursor: pointer;">
+    </div>
+
+    <div class="header-right">
+      <i class="pi pi-heart"></i>
+      
+      
+      
+      <i class="pi pi-map-marker" routerLink="/stores" style="cursor: pointer;" title="סניפי הרשת"></i>
+      
+      <i class="pi pi-user" (click)="userMenu.toggle($event)" style="cursor: pointer;" title="אפשרויות משתמש"></i> 
+      <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
+        <div class="cart-icon" routerLink="/cart" style="cursor: pointer;">
+          <i class="pi pi-shopping-bag"></i>
+        <span class="count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="categories-nav">
+    <ul>
+      <li><a routerLink="/new">חדש</a></li>
+      <li><a routerLink="/exclusive">בלעדי לאתר</a></li>
+      <li><a routerLink="/collections">קולקציות</a></li>
+      <li><a routerLink="/gift-card">GIFT CARD</a></li>
+      <li><a routerLink="/gifts">מתנות</a></li>
+      <li><a routerLink="/necklaces">שרשראות</a></li>
+      <li><a routerLink="/earrings">עגילים</a></li>
+      <li><a routerLink="/rings">טבעות</a></li>
+      <li><a routerLink="/bracelets">צמידים</a></li>
+      <li><a routerLink="/charms">צ'ארמס</a></li>
+      <li><a routerLink="/engraving">תכשיטי חריטה</a></li>
+    </ul>
+  </nav>
+</header>

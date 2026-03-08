@@ -1,0 +1,68 @@
+<div class="cart-page-container">
+  <div class="cart-card shadow-2">
+    <div class="cart-header">
+      <h1>סל הקניות שלי</h1>
+      <span class="item-count">{{ cartItems.length }} פריטים</span>
+    </div>
+
+    <div class="cart-content" *ngIf="cartItems.length > 0; else emptyCart">
+      <div class="cart-items-list">
+        <div *ngFor="let item of cartItems" class="cart-item">
+          <div class="item-image">
+            <img [src]="getProductImagePath(item)" 
+                 [alt]="item.productName" 
+                 onerror="this.src='assets/images/placeholder.png'">
+          </div>
+          
+          <div class="item-details">
+            <h3 class="product-name">{{ item.productName }}</h3>
+            <p class="product-price">{{ item.price }} ₪</p>
+          </div>
+
+          <div class="item-actions">
+            <div class="quantity-controls">
+              <p-inputNumber 
+                [(ngModel)]="item.selectedQuantity" 
+                [showButtons]="true" 
+                buttonLayout="horizontal" 
+                spinnerMode="horizontal"
+                decrementButtonIcon="pi pi-minus" 
+                incrementButtonIcon="pi pi-plus"
+                [min]="1"
+                (onInput)="updateQuantity(item.productId, $event.value ?? 1)">
+              </p-inputNumber>
+            </div>
+            <p-button icon="pi pi-trash" severity="danger" [text]="true" (onClick)="removeItem(item.productId)"></p-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <h3>סיכום הזמנה</h3>
+        <div class="summary-row">
+          <span>סכום ביניים:</span>
+          <span>{{ getTotalPrice() }} ₪</span>
+        </div>
+        <div class="summary-row">
+          <span>משלוח:</span>
+          <span class="free-shipping">חינם</span>
+        </div>
+        <hr>
+        <div class="summary-row total">
+          <span>סה"כ לתשלום:</span>
+          <span>{{ getTotalPrice() }} ₪</span>
+        </div>
+        <p-button label="המשך לתשלום" severity="success" styleClass="checkout-btn"></p-button>
+      </div>
+    </div>
+
+    <ng-template #emptyCart>
+      <div class="empty-state">
+        <i class="pi pi-shopping-bag"></i>
+        <h2>הסל שלך ריק</h2>
+        <p>נראה שעדיין לא הוספת פריטים לסל שלך.</p>
+        <p-button label="חזרה לחנות" icon="pi pi-arrow-right" [routerLink]="['/products']" severity="info"></p-button>
+      </div>
+    </ng-template>
+  </div>
+</div>

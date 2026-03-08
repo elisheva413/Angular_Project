@@ -1,0 +1,56 @@
+<p-toast></p-toast>
+<p-confirmDialog dir="rtl"></p-confirmDialog>
+
+<div class="product-management-container" style="padding-top: 140px; padding-inline: 20px;">
+  <div class="header-section" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 2rem;">
+    <h1 style="margin: 0; color: #334155;">ניהול מלאי מוצרים</h1>
+    <div class="header-buttons" style="display: flex; gap: 0.5rem;">
+      <p-button label="הצג מוצרים" icon="pi pi-refresh" (click)="loadProducts()" 
+                [style]="{'background-color': '#ffb6c1', 'border-color': '#ffb6c1', 'color': '#fff'}"></p-button>
+      <p-button label="הוסף מוצר חדש" icon="pi pi-plus" severity="success" (click)="openAddDialog()"></p-button>
+    </div>
+  </div>
+
+  <div class="card shadow-2">
+    <p-table [value]="products" [rows]="12" [paginator]="true" styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>תמונה 1</th>
+          <th>תמונה 2</th> 
+          <th>שם המוצר</th>
+          <th>תיאור</th>
+          <th>מחיר</th>
+          <th>מלאי</th>
+          <th>סטטוס</th>
+          <th>פעולות</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-product>
+        <tr>
+          <td>
+            <img [src]="getProductImagePath(product, 'imgUrl')" width="50" class="shadow-1" 
+                 onerror="this.src='assets/images/no-image.png'"/>
+          </td>
+          <td>
+            <img [src]="getProductImagePath(product, 'imgUrl2')" width="50" class="shadow-1"
+                 onerror="this.src='assets/images/no-image.png'"/>
+          </td>
+          <td class="font-bold">{{ product.productName }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price }} ₪</td>
+          <td>{{ product.quantity }}</td>
+          <td>
+            <p-tag [severity]="product.isActive ? 'success' : 'secondary'" [value]="product.isActive ? 'פעיל' : 'מבוטל'"></p-tag>
+          </td>
+          <td>
+            <div class="flex gap-2">
+              <p-button icon="pi pi-pencil" [rounded]="true" severity="info" [text]="true" (click)="openEditDialog(product)"></p-button>
+              <p-button icon="pi pi-trash" [rounded]="true" severity="danger" [text]="true" (click)="deleteProduct(product.productId)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

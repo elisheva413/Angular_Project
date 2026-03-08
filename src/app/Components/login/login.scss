@@ -1,0 +1,156 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch; 
+  padding: 5rem 10%;
+  max-width: 1400px;
+  margin: 0 auto;
+  direction: rtl;
+  gap: 5rem;
+  font-family: sans-serif;
+
+  .auth-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+    h1 { font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; }
+    p { color: #666; font-size: 1.1rem; }
+    h3 { font-size: 1.8rem; margin-bottom: 2rem; font-weight: 600; }
+  }
+}
+
+:host ::ng-deep {
+
+  .underline-input {
+    border: none !important;
+    border-bottom: 1px solid #000 !important; 
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 1rem 0 !important;
+    width: 100%;
+    transition: border-color 0.2s;
+    
+    &:focus {
+      box-shadow: none !important;
+      border-bottom-width: 2px !important;
+    }
+
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+  }
+
+
+  p-floatlabel {
+    display: block;
+    position: relative;
+
+    label {
+      right: 0 !important; 
+      left: auto !important;
+      color: #999;
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+  
+    input:focus ~ label,
+    input.p-filled ~ label,
+    .p-inputwrapper-focus ~ label,
+    .p-inputwrapper-filled ~ label {
+      top: -1.2rem !important; 
+      font-size: 0.9rem !important;
+      color: #000 !important;
+      font-weight: bold;
+    }
+  }
+
+  .p-inputtext:enabled:focus { box-shadow: none; }
+
+  .p-button.p-button-black {
+    background: #000 !important;
+    color: #fff !important;
+    border: 1px solid #000 !important;
+    border-radius: 0 !important;
+    padding: 1.2rem !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    width: 100%;
+
+    &:hover { opacity: 0.9; }
+  }
+
+  .p-button.p-button-pink {
+    background: #ffb6c1 !important;
+    color: #fff !important;
+    border: 1px solid #ffb6c1 !important;
+    border-radius: 0 !important;
+    padding: 1.2rem !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    width: 100%;
+
+    &:hover { 
+      opacity: 0.9;
+      background: #ff99aa !important;
+    }
+  }
+
+  .p-button.p-button-outlined-black {
+    background: transparent !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+    border-radius: 0 !important;
+    padding: 1.2rem !important;
+    width: 100%;
+
+    &:hover { background: #f4f4f4 !important; }
+  }
+
+  .p-divider-vertical {
+    &::before { border-left: 1px solid #e0e0e0 !important; }
+  }
+}
+
+.field {
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+.user-type-selection {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  justify-content: flex-start; 
+
+  .radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    label {
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+  }
+}
+
+
+@media (max-width: 992px) {
+  .auth-container {
+    flex-direction: column;
+    padding: 2rem 5%;
+    gap: 3rem;
+  }
+  
+  .p-divider-vertical {
+    display: none;
+  }
+}

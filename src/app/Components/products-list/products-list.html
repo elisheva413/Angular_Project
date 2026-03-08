@@ -1,0 +1,17 @@
+<div class="products-header">
+  <h1>מוצרים</h1>
+</div>
+
+<!-- פשוט תצוגת רשימה; ניתן לשפר בהמשך -->
+<div *ngIf="products.length">
+  <p>נמצאו {{ products.length }} מוצרים</p>
+  <ul>
+    <li *ngFor="let p of products; trackBy: trackByProduct">
+      {{ p.productName }} - {{ p.price | currency:'ILS' }}
+      <button pButton type="button" label="הוסף לעגלה" class="pink-btn" (click)="addToCart(p)"></button>
+    </li>
+  </ul>
+</div>
+<div *ngIf="!products.length">
+  <p>לא נמצאו מוצרים.</p>
+</div>

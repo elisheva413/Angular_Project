@@ -1,0 +1,150 @@
+
+$bg-main: #ffffff;         
+$bg-card: #ffffff;
+$primary-color: #e19fbb;   
+$primary-bg: #fdf2f8;      
+$text-main: #000000;       
+$text-muted: #4b5563;      
+$text-label: #1a1a1a;       
+$shadow: 0 4px 20px rgba(0, 0, 0, 0.05); 
+
+.profile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: $bg-main;
+  min-height: 80vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  direction: rtl;
+}
+
+.profile-card {
+  background: $bg-card;
+  border-radius: 16px;
+  box-shadow: $shadow;
+  width: 100%;
+  max-width: 600px;
+  padding: 2.5rem;
+  border: 1px solid #f3f4f6;
+
+  @media (max-width: 600px) {
+    padding: 1.5rem;
+  }
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .profile-icon {
+    display: inline-block;
+    font-size: 2.5rem;
+    color: $primary-color !important; 
+    background: $primary-bg !important; 
+    padding: 1.5rem;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 1px solid #fbcfe8;
+  }
+
+  h2 {
+    color: $text-main; 
+    margin: 0 0 0.5rem 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+
+  p {
+    color: $text-muted;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+}
+
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-weight: 700;
+    color: $text-label;
+    font-size: 0.9rem;
+    text-align: right;
+  }
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+
+  ::ng-deep {
+    .p-inputtext {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      color: #000000;
+
+      &:enabled:focus {
+        border-color: $primary-color !important; 
+        box-shadow: 0 0 0 0.2rem #fce7f3 !important;
+      }
+    }
+    
+    .p-inputtext:disabled {
+        background-color: #f9fafb;
+        color: #6b7280;
+    }
+  }
+}
+
+.action-buttons {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+
+  ::ng-deep {
+    .p-button {
+      width: 100%;
+      border-radius: 8px;
+      padding: 0.8rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      background: #000000 !important; 
+      border: none !important;
+      color: #ffffff !important;
+      transition: background 0.3s;
+
+      .p-button-icon {
+          color: #fbcfe8 !important; 
+          margin-left: 0.5rem;
+      }
+
+      &:hover {
+        background: $primary-color !important;
+      }
+    }
+
+    .pink-btn {
+      background: #ffb6c1 !important;
+      border: none !important;
+      color: #ffffff !important;
+
+      &:hover {
+        background: #ff99aa !important;
+      }
+    }
+  }
+}

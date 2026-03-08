@@ -1,0 +1,22 @@
+/* pink buttons to match cart theme */
+.pink-btn {
+  background-color: #ffb6c1 !important; /* pandora-pink */
+  border-color: #ffb6c1 !important;
+  color: #fff !important;
+}
+.pink-btn:hover,
+.pink-btn:focus {
+  background-color: #ff99aa !important; /* darker shade */
+  border-color: #ff99aa !important;
+}
+/* blue button for load actions */
+.blue-btn {
+  background-color: #4a7ba7 !important;
+  border-color: #4a7ba7 !important;
+  color: #fff !important;
+}
+.blue-btn:hover,
+.blue-btn:focus {
+  background-color: #3a5f87 !important;
+  border-color: #3a5f87 !important;
+}
