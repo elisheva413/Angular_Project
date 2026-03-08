@@ -1,7 +1,14 @@
+<div class="header-spacer" *ngIf="!isHomePage"></div>
+
 <div class="card">
   <p-menubar [model]="items"></p-menubar>           
 </div>
-<header class="pandora-header">
+
+<header class="pandora-header" 
+        [class.header-hidden]="isHeaderHidden" 
+        [class.header-scrolled]="isScrolled"
+        [class.header-transparent]="isTransparent">
+        
   <div class="promo-bar">משלוח חינם בקנייה מעל 299₪</div>
 
   <div class="middle-header">
@@ -12,7 +19,8 @@
           type="text" 
           placeholder="חפשו את התכשיט הבא שלכם..."
           [(ngModel)]="searchQuery"
-          (keyup.enter)="onSearch()"> </div>
+          (keyup.enter)="onSearch()"> 
+      </div>
     </div>
 
     <div class="header-center">
