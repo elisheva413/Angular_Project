@@ -143,10 +143,25 @@
           </div>
         </div>
 
-        <div class="sp-actions">
+        <!-- <div class="sp-actions">
           <button class="btn-add-to-cart" (click)="addToCart()">
             <span>הוספה לסל</span>
             <i class="pi pi-shopping-bag"></i>
+          </button>
+        </div> -->
+        <div class="sp-actions">
+          <button class="btn-add-to-cart" [class.added]="isAdded" (click)="addToCart()" [disabled]="isAdded">
+            
+            <ng-container *ngIf="!isAdded">
+              <span>הוספה לסל</span>
+              <i class="pi pi-shopping-bag"></i>
+            </ng-container>
+
+            <ng-container *ngIf="isAdded">
+              <span>נוסף</span>
+              <i class="pi pi-check"></i>
+            </ng-container>
+
           </button>
         </div>
 

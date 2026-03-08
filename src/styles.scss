@@ -354,6 +354,11 @@
 @import "primeicons/primeicons.css";
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&display=swap');
 
+//להגיד לזהבי להוסיף את זה 
+html {
+  scroll-behavior: smooth;
+}
+//
 body {
     margin: 0;
     direction: rtl;
@@ -541,4 +546,62 @@ body {
       }
     }
   }
+  /* styles.scss - הפתרון הסופי למלחמת השכבות */
+
+/* אנחנו אומרים לכל הקומפוננטה של המסננים שהיא השכבה הכי עליונה באתר */
+app-product-filter {
+    position: relative;
+    z-index: 1000 !important; /* גבוה בהרבה מה-100 של התפריט */
+}
+
+/* מוודאים שה-Overlay (ההחשכה) תופס את כל המסך, כולל ה-MENU */
+.filter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6) !important; /* החשכה קצת יותר חזקה */
+    z-index: 1001 !important;
+}
+
+/* התפריט עצמו עולה מעל ההחשכה */
+.filter-sidebar {
+    position: fixed;
+    z-index: 1002 !important;
+}
+
+
+/////////////////////////////////////////////////////
+/// /* Custom Toast - Pandora Style */
+.custom-toast-container {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20000;
+  pointer-events: none;
+}
+
+.custom-toast {
+  background: #27251f; /* שחור פנדורה */
+  color: white;
+  padding: 14px 28px;
+  border-radius: 50px; /* עיצוב קפסולה מודרני */
+  font-family: 'Assistant', sans-serif;
+  font-size: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideUpFade 0.4s ease-out;
+
+  &.warn { border-left: 4px solid #ffb6c1; } /* ורוד לאזהרה */
+  &.success { border-left: 4px solid #b6ffc1; }
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 }

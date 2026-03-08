@@ -142,9 +142,30 @@
   width: 100%;
   margin-bottom: 50px;
 
+  // .btn-add-to-cart {
+  //   width: 100%;
+  //   background-color: #ffb6c1;; /* הורוד שדגמנו! */
+  //   color: #000;
+  //   border: none;
+  //   padding: 18px;
+  //   font-size: 17px;
+  //   font-weight: bold;
+  //   border-radius: 4px;
+  //   cursor: pointer;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   gap: 15px;
+  //   transition: all 0.3s ease;
+
+  //   &:hover {
+  //     background-color: #333;
+  //     color: #fff;
+  //   }
+  // }
   .btn-add-to-cart {
     width: 100%;
-    background-color: #ffb6c1;; /* הורוד שדגמנו! */
+    background-color: #ffb6c1; /* הוורוד שלנו */
     color: #000;
     border: none;
     padding: 18px;
@@ -156,13 +177,31 @@
     align-items: center;
     justify-content: center;
     gap: 15px;
-    transition: all 0.3s ease;
-
-    &:hover {
+    transition: all 0.15s ease;
+    &:hover:not(.added) {
       background-color: #333;
       color: #fff;
     }
+
+    /* === מצב לאחר לחיצה === */
+    &.added {
+      background-color: #27251F; /* שחור-פנדורה כמו בתמונה ששלחת */
+      color: #fff;
+      cursor: default; /* משנה את העכבר כדי שיבינו שזה במצב המתנה */
+      
+      i {
+        font-size: 20px;
+        animation: popIn 0.15s ease-out forwards;
+      }
+    }
   }
+
+/* האנימציה הקטנה שגורמת ל-V לקפוץ פנימה בסטייל */
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
 }
 
 .sp-description-box {

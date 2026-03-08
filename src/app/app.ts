@@ -26,15 +26,33 @@
 // }
 
 
-import { Component } from '@angular/core';
+// import { Component } from '@angular/core';
+// import { RouterOutlet } from '@angular/router';
+// import { Menu } from './Components/menu/menu';
+
+// @Component({
+//   selector: 'app-root',
+//   standalone: true,
+//   imports: [Menu, RouterOutlet],
+//   templateUrl: './app.html',
+//   styleUrl: './app.scss',
+// })
+// export class App {}
+
+import { Component, inject } from '@angular/core'; // הוספנו את inject
+import { CommonModule } from '@angular/common'; // חובה בשביל ה-HTML של ההודעות
 import { RouterOutlet } from '@angular/router';
 import { Menu } from './Components/menu/menu';
+import { CartService } from './Services/cart-service'; // ודאי שהנתיב נכון אצלך
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Menu, RouterOutlet],
+  imports: [CommonModule, Menu, RouterOutlet], // הוספנו את CommonModule לכאן
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {}
+export class App {
+  // חייב להיות public כדי ש-app.html יוכל להאזין לו
+  public cartService = inject(CartService);
+}

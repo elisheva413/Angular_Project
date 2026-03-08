@@ -1,4 +1,4 @@
-<div class="header-spacer" *ngIf="!isHomePage"></div>
+<div class="header-spacer" [class.hidden]="isHomePage"></div>
 
 <div class="card">
   <p-menubar [model]="items"></p-menubar>           
@@ -33,8 +33,9 @@
       <i class="pi pi-map-marker" routerLink="/stores" style="cursor: pointer;" title="סניפי הרשת"></i>
       <i class="pi pi-user" (click)="userMenu.toggle($event)" style="cursor: pointer;" title="אפשרויות משתמש"></i> 
       <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
-      <div class="cart-icon">
-        <i class="pi pi-shopping-bag"></i><span class="count">0</span>
+      <div class="cart-icon" routerLink="/cart" style="cursor: pointer;">
+        <i class="pi pi-shopping-bag"></i>
+        <span class="count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
       </div>
     </div>
   </div>
@@ -43,8 +44,8 @@
      <ul>
        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 135 }">חדש</a></li>
        <li><a href="#">בלעדי לאתר</a></li>
-       <li><a href="#">קולקציות</a></li> 
-       <li><a href="#">GIFT CARD</a></li>
+       <li><a routerLink="/" fragment="collections">קולקציות</a></li>
+       <li><a [routerLink]="['/gift-card']" class="giftcard-link">GIFT CARD</a></li>
        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 901 }">מתנות</a></li>
        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 115 }">שרשראות</a></li>
        <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 120 }">עגילים</a></li>

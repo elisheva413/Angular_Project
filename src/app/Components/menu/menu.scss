@@ -1,18 +1,34 @@
 /* ========================================= */
 /* --- התפריט החכם - קלאסים חדשים נוספו --- */
 /* ========================================= */
-.header-spacer {
-  height: 125px; 
+:host {
+  display: block;
   width: 100%;
-  @media (max-width: 768px) { height: 95px; }
 }
+
+.header-spacer {
+  height: 146px; /* הגובה המושלם שלנו */
+  width: 100%;
+  display: block;
+  
+  @media (max-width: 768px) {
+    height: 125px;
+  }
+
+  /* ברגע שאנחנו בעמוד הבית, זה מעלים אותו בטוח */
+  &.hidden {
+    display: none !important;
+  }
+}
+
+
 
 .pandora-header {
   position: fixed; 
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9999; 
+  z-index: 100 !important;
   background: #fff; /* צבע לבן כברירת מחדל לכל האתר */
   direction: rtl;
   font-family: 'Assistant', sans-serif;
@@ -33,8 +49,6 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   }
 
-  /* ==== הקסם של עמוד הבית ==== */
-  /* כשהוא למעלה בעמוד הבית, הוא חייב להיות שקוף! */
   /* ==== הקסם של עמוד הבית ==== */
   /* כשהוא למעלה בעמוד הבית, הוא חייב להיות שקוף! */
   &.header-transparent {
@@ -79,14 +93,7 @@
 
 /* --- מכאן ממשיך שאר העיצוב (promo-bar, middle-header וכו') שהעברנו קודם --- */
 /* שומר מקום פיזי כדי שהאתר לא "יקפוץ" למעלה (בגובה המשוער של ההדר שלך) */
-.header-spacer {
-  height: 125px; 
-  width: 100%;
-  
-  @media (max-width: 768px) {
-    height: 95px; // בנייד ההדר קטן יותר
-  }
-}
+/* שומר מקום פיזי מדויק לגובה ההדר כדי שהתוכן לא ייבלע תחתיו */
 
 .pandora-header {
   position: fixed; /* עושה אותו צף! */

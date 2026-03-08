@@ -8,4 +8,5 @@ export class ProductModel {
   imgUrl2?: string;   
   color!: string;
   material!: string;
+  quantity!: number;
 }

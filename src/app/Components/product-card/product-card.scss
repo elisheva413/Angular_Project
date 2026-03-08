@@ -91,18 +91,34 @@
   position: absolute;
   right: 14px;
   top: 14px;
+  
+  /* הפכנו אותו לעיגול מושלם כדי שהמילוי הוורוד ייראה טוב */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #27251F; /* צבע שחור/אפור כהה */
-  font-size: 20px; /* גודל האייקון */
-  padding: 4px;
+  color: #27251F; 
+  font-size: 18px; /* קצת יותר עדין מ-20 כדי לשבת יפה בעיגול */
   z-index: 2;
-  transition: transform 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   &:hover {
     color: #000;
-    transform: scale(1.1); /* גדל מעט במעבר עכבר */
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.8); /* רקע לבן חצי שקוף בהובר כדי לבלוט על התמונה */
+  }
+
+  /* === הקסם: מצב "נוסף לסל" === */
+  &.added {
+    background-color: #ffb6c1; /* ורוד פנדורה! */
+    color: #000; /* אייקון שחור */
+    transform: scale(1.15); /* קופץ קצת החוצה */
+    box-shadow: 0 4px 12px rgba(255, 182, 193, 0.6); /* הילה ורודה עדינה */
   }
 }
 

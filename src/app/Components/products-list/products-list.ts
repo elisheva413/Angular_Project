@@ -215,11 +215,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Component, OnInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router'; 
-import { ProductService, ProductsResponse } from '../../Services/product-service';
 import { ProductModel } from '../../Models/Products-Model';
 import { ProductCard } from '../product-card/product-card';
 import { ProductFilter } from '../product-filter/product-filter';
 import { CATEGORY_DICTIONARY } from '../../Models/categories.const';
+// במקום לייבא מה-Service, מייבאים מה-Model
+import { ProductsResponse } from '../../Models/ProductApi-Model'; 
+import { ProductService } from '../../Services/product-service';
 
 @Component({
   selector: 'app-products-list',

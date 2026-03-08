@@ -100,14 +100,16 @@
 //     if (!this.product) return;
 //     console.log('ADD TO CART', { product: this.product, qty: this.qty });
 //   }
-// }
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink, Router } from '@angular/router'; // הוספנו Router
+// }import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router'; 
 import { ButtonModule } from 'primeng/button';
 import { ProductService } from '../../Services/product-service';
 import { ProductModel } from '../../Models/Products-Model';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+// הוספתי כאן את המילה inject כדי שנוכל להשתמש בסרוויס של הסל
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core'; 
 import { CATEGORY_DICTIONARY } from '../../Models/categories.const';
+import { CartService } from '../../Services/cart-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-single-product',
@@ -117,22 +119,24 @@ import { CATEGORY_DICTIONARY } from '../../Models/categories.const';
   styleUrl: './single-product.scss',
 })
 export class SingleProduct implements OnInit {
+  
+  // הנה החוט שחיברנו! הזרקת הסרוויס של הסל
+  private cartService = inject(CartService); 
+
   product: ProductModel | null = null;
   loading = true;
   errorMsg = '';
   selectedImage: 'imgUrl' | 'imgUrl2' = 'imgUrl';
   qty = 1;
-
-  // משתנים לניהול הניווט החכם
   breadcrumbLabel: string = 'כל המוצרים';
+  isAdded: boolean = false; // המשתנה החדש שלנו לאנימציית הכפתור
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router, // הזרקת ה-Router לקריאת ה-State
+    private router: Router, 
     private productService: ProductService,
     private cdr: ChangeDetectorRef 
   ) {
-    // בדיקה אם עבר מידע ב-State מהניווט הקודם (למשל שם הקטגוריה)
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state?.['fromLabel']) {
       this.breadcrumbLabel = navigation.extras.state['fromLabel'];
@@ -155,7 +159,6 @@ export class SingleProduct implements OnInit {
         this.product = p;
         this.selectedImage = 'imgUrl';
 
-        // תכנון חכם: אם הגענו ישירות לדף (Refresh), נשלוף את שם הקטגוריה מהמילון לפי ה-ID
         if (this.breadcrumbLabel === 'כל המוצרים' && p.categoryId) {
           const categoryEntry = CATEGORY_DICTIONARY[p.categoryId];
           if (categoryEntry) {
@@ -175,7 +178,6 @@ export class SingleProduct implements OnInit {
     });
   }
 
-  // לוגיקה קיימת של תמונות וכמות - נשמרת ללא שינוי
   get mainImageSrc(): string {
     if (!this.product) return '';
     const url = this.selectedImage === 'imgUrl2' && this.product.imgUrl2 ? this.product.imgUrl2 : this.product.imgUrl;
@@ -198,6 +200,26 @@ export class SingleProduct implements OnInit {
 
   addToCart() {
     if (!this.product) return;
+    
+    // כאן הקסם קורה! קוראים לסרוויס עם המוצר והכמות (qty) שהלקוחה בחרה
+    this.cartService.addToCart(this.product, this.qty); 
     console.log('ADD TO CART', { product: this.product, qty: this.qty });
+
+    
+    this.isAdded = true;
+    // אחרי 2000 מילי-שניות (2 שניות בדיוק), מחזירים את הכפתור למצב רגיל
+    setTimeout(() => {
+      this.isAdded = false;
+      this.cdr.detectChanges(); 
+
+    }, 800);
+    
   }
+
+    
+    
+  
 }
+
+
+

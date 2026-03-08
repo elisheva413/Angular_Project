@@ -36,8 +36,7 @@
     </div>
   </section>
 
-
-  <section class="stack-section categories-section">
+  <section id="collections" class="stack-section categories-section">
     <div class="categories-container">
       <h2 class="section-title">הקולקציות שלנו:</h2>
       
@@ -82,7 +81,7 @@
     </div>
   </section>
 
-  <section class="stack-section engraving-editorial-final">
+<section class="stack-section engraving-editorial-final">
   <div class="editorial-grid">
     
     <div class="editorial-column text-col">
@@ -95,11 +94,13 @@
       </div>
     </div>
 
-    <div class="editorial-column image-main-col">
-      <img src="images/Engeraved2.webp" alt="Pandora Charms Engraving" class="full-height-img">
+    <div class="editorial-column image-main-col" [style.transform]="mainImageTransform">
+      <div class="main-img-wrapper">
+        <img src="images/Engeraved2.webp" alt="Pandora Charms Engraving" class="full-height-img">
+      </div>
     </div>
 
-    <div class="editorial-column image-side-col">
+    <div class="editorial-column image-side-col" [style.transform]="sideImageTransform">
       <div class="side-img-container">
         <img src="images/Engraved.png" alt="Pandora Rings Engraving">
       </div>
