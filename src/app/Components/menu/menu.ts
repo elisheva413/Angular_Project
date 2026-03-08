@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common'; // ייבוא חשוב בשביל *ngIf
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
@@ -6,14 +7,14 @@ import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { FormsModule } from '@angular/forms'; 
 import { filter } from 'rxjs/operators';
 import { CartService } from '../../Services/cart-service';
-import { CommonModule } from '@angular/common'; // <--- זה מה שהיה חסר בשביל ש-*ngIf יעבוד!
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
   standalone: true,
-  imports: [MenubarModule, MenuModule, RouterModule, FormsModule]
+  // הוספתי כאן את ה-CommonModule שהיה חסר!
+  imports: [CommonModule, MenubarModule, MenuModule, RouterModule, FormsModule] 
 })
 export class Menu implements OnInit {
   private router = inject(Router);
@@ -32,9 +33,7 @@ export class Menu implements OnInit {
   isTransparent = false; 
 
   ngOnInit() {
-    // הפונקציה המעודכנת - עכשיו מנקה גם סימני שאלה וגם סולמיות (#)
     const checkRoute = (url: string) => {
-      // כאן הקסם: מנקים את ה-URL מכל מה שבא אחרי ? או #
       const cleanUrl = url.split('#')[0].split('?')[0]; 
       
       this.isHomePage = cleanUrl === '/' || cleanUrl === '' || cleanUrl === '/home';
@@ -82,7 +81,6 @@ export class Menu implements OnInit {
   }
 
   checkTransparency() {
-    // עכשיו isHomePage יישאר true גם אם יש #collections בכתובת
     this.isTransparent = this.isHomePage && !this.isScrolled;
   }
 

@@ -44,11 +44,13 @@ import { CommonModule } from '@angular/common'; // חובה בשביל ה-HTML �
 import { RouterOutlet } from '@angular/router';
 import { Menu } from './Components/menu/menu';
 import { CartService } from './Services/cart-service'; // ודאי שהנתיב נכון אצלך
+import { footer } from '@primeuix/themes/aura/confirmpopup';
+import { FooterComponent } from './Components/footer/footer';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, Menu, RouterOutlet], // הוספנו את CommonModule לכאן
+  imports: [CommonModule, Menu, RouterOutlet,FooterComponent], // הוספנו את CommonModule לכאן
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
