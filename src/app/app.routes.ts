@@ -4,15 +4,17 @@ import { ProductsList } from './Components/products-list/products-list';
 import { SingleProduct } from './Components/single-product/single-product';
 import { GiftCard } from './Components/gift-card/gift-card'; 
 import { Cart } from './Components/cart/cart';
-import { LoginComponent } from './Components/login/login';
-import { RegisterComponent } from './Components/register/register';
-import { StoreLocatorComponent } from './Components/store-locator/store-locator';
-import { ProfileComponent } from './Components/profile/profile'; 
-import { Terms } from './Components/terms/terms';
+import { Login} from './Components/login/login'; 
+import { Register } from './Components/register/register'; 
+import { Checkout } from './Components/checkout/checkout';
+import { ProfileComponent } from './Components/profile/profile';
 import { AdminDashboardComponent } from './Components/admin/admin-dashboard/admin-dashboard';
+import { StoreLocatorComponent } from './Components/store-locator/store-locator';
 import { ProductManagementComponent } from './Components/admin/product-management/product-management';
-import { authGuard } from './Components/auth-guard'; 
-
+import { OrdersHistoryComponent } from './Components/orders-history/orders-history'; 
+import { EditInfoComponent } from './Components/edit-info/edit-info'; 
+import { adminGuard } from './Guards/admin.guard';
+import { NetfreeComponent } from './Components/netfree/netfree'; 
 
 export const routes: Routes = [
     { path: '', component: HomePage },
@@ -20,26 +22,32 @@ export const routes: Routes = [
     { path: 'products/:id', component: SingleProduct},
     { path: 'gift-card', component: GiftCard },
     { path: 'cart', component: Cart },
-    { path: '', redirectTo: 'login', pathMatch: 'full' }, 
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'profile', component: ProfileComponent }, 
-    { path: '', redirectTo: 'login', pathMatch: 'full' }, 
-    { path: 'stores', component: StoreLocatorComponent },
-    { path: 'terms', component: Terms },
-    { path: 'admin', component: AdminDashboardComponent },
-    { path: 'admin/products', component: ProductManagementComponent },
-    { 
-      path: 'update-profile', 
+    { path: 'login', component: Login },      
+    { path: 'register', component: Register },
+    { path: 'checkout', component: Checkout },
+    { path: 'netfree', component: NetfreeComponent },
+    
+    {   
+      path: 'profile', 
       component: ProfileComponent, 
-      canActivate: [authGuard] 
+      children: [
+        { path: 'edit', component: EditInfoComponent }, 
+        { path: 'orders', component: OrdersHistoryComponent }, 
+        { path: '', redirectTo: 'edit', pathMatch: 'full' } 
+      ]
     },
-    { path: 'login', component: LoginComponent },
-    { path: 'cart', component: Cart },
-    { path: '**', redirectTo: '' },// ה-Wildcard חייב להישאר אחרון!
-
+    { path: 'my-orders', component: OrdersHistoryComponent }, 
+    { path: 'stores', component: StoreLocatorComponent },
+    
+    { 
+      path: 'admin', 
+      canActivate: [adminGuard],
+      children: [
+        { path: '', component: AdminDashboardComponent },
+        { path: 'products', component: ProductManagementComponent },
+        { path: 'orders', component: OrdersHistoryComponent } 
+      ]
+    },
+    
+    { path: '**', redirectTo: '' }
 ];
-
-
-
-

@@ -4,14 +4,16 @@ export interface OrderItem {
   productsId: number;
   orderId: number;
   quantity: number;
-  // הגדלת ראש: אם הוספת בשרת פרטים נוספים ל-DTO כמו שם מוצר או מחיר, הוסיפי אותם גם כאן
+  productName: string;  
+  productImage: string;  
+  price: number;  
 }
 
 export interface Order {
   orderId: number;
-  orderDate: string; // ב-TS אנחנו מקבלים תאריך כמחרוזת מה-JSON
+  orderDate: string; 
   orderSum: number;
   userId: number;
   orderStatus: string; // הסטטוסים שלנו: 'Paid', 'Shipped', 'Delivered'
-  ordersItems: OrderItem[]; // רשימת הפריטים - שימי לב לשם המדויק כמו בשרת!
+  ordersItems: OrderItem[]; 
 }

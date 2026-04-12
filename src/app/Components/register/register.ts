@@ -2,13 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 
-import { UserService } from '../../Services/user.service'; 
+import { UserService } from '../../Services/user-service'; 
 
 @Component({
   selector: 'app-register',
@@ -25,7 +24,7 @@ import { UserService } from '../../Services/user.service';
   templateUrl: './register.html',
   styleUrls: ['./register.scss'] 
 })
-export class RegisterComponent {
+export class Register {
   private userService = inject(UserService);
   private router = inject(Router);
 
@@ -40,39 +39,35 @@ export class RegisterComponent {
   };
 
   onRegister() {
-    // ולידציה בסיסית - מוודאים שהשדות החשובים מלאים
+    // 1. ולידציה בסיסית
     if (!this.registerData.Email || !this.registerData.Password || !this.registerData.Phone) {
         alert('נא למלא את כל השדות, כולל טלפון וכתובת');
         return;
     }
-    
-    console.log('מנסה להירשם עם:', this.registerData);
-    
-    this.userService.addUser(this.registerData).subscribe({
-      next: (res: any) => {
-        console.log('ההרשמה הצליחה!', res);
-        
-        // --- יצירת אובייקט נקי ללוקאל סטורג' (בדיוק כמו בלוגין, ובלי הסיסמה!) ---
-        const userToSave = {
-          // מנסה למשוך את ה-ID שחזר מהשרת (תלוי אם הוא מחזיר id או Id)
-          id: res?.id || res?.Id, 
-          firstName: this.registerData.FirstName,
-          lastName: this.registerData.LastName,
-          email: this.registerData.Email,
-          phone: this.registerData.Phone,
-          address: this.registerData.Address
-        };
 
-        localStorage.setItem('currentUser', JSON.stringify(userToSave));
-        localStorage.setItem('userRole', 'User');
+    // 2. מיפוי האובייקט לשרת
+    const userToRegister = {
+      FirstName: this.registerData.FirstName,
+      LastName: this.registerData.LastName,
+      UserName: this.registerData.Email,
+      Password: this.registerData.Password,
+      Phone: this.registerData.Phone,
+      Address: this.registerData.Address,
+      Role: 'User'
+    };
+    
+    // 3. שליחה לשרת
+    this.userService.register(userToRegister).subscribe({
+      next: (res: any) => {
+        this.userService.saveUserToStorage(res);
+        alert('נרשמת בהצלחה! ברוכים הבאים לפנדורה');
         
-        alert('נרשמת בהצלחה! מעביר אותך לחנות...');
-        this.router.navigate(['/products']); 
+        // הניווט לעמוד הבית כפי שביקשת
+        this.router.navigate(['/']); 
       },
       error: (err) => {
-        console.error('שגיאה בהרשמה:', err);
-        alert('משהו השתבש... בדקי שה-API דלוק ושכל השדות מלאים');
+        alert(err.error || 'משהו השתבש בהרשמה');
       }
     });
   }
-}
+  }

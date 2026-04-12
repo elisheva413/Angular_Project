@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { DividerModule } from 'primeng/divider';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { UserService } from '../../Services/user.service'; 
+import { UserService } from '../../Services/user-service'; 
 
 @Component({
   selector: 'app-login',
@@ -27,12 +27,12 @@ import { UserService } from '../../Services/user.service';
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
-export class LoginComponent implements OnInit {
+export class Login implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
 
   loginData = {
-    email: '',
+    email: '', // נשאר לצורך ה-HTML
     password: ''
   };
 
@@ -42,43 +42,48 @@ export class LoginComponent implements OnInit {
     this.loginData = { email: '', password: '' };
   }
 
- onLogin() {
-  if (!this.loginData.email || !this.loginData.password) {
-    alert('נא למלא אימייל וסיסמה');
-    return;
-  }
-
-  this.userService.login(this.loginData).subscribe({
-    next: (res) => {
-      if (!res) {
-        alert('שגיאה בנתוני המשתמש');
-        return;
-      }
-
-          
-      const serverRole = (res?.Role || res?.role || "").toLowerCase().trim();
-
-      if (serverRole === 'admin') {
-        localStorage.setItem('userRole', 'Admin');
-        localStorage.setItem('currentUser', JSON.stringify(res));
-        this.router.navigate(['/admin']); 
-      } else {
-        localStorage.setItem('userRole', 'User');
-        const userToSave = {
-          id: res.id || res.Id,
-          firstName: res.firstName,
-          lastName: res.lastName,
-          email: res.email,
-          phone: res.phone,
-          address: res.address
-        };
-        localStorage.setItem('currentUser', JSON.stringify(userToSave));
-        this.router.navigate(['/products']); 
-      }
-    },
-    error: (err) => {
-      console.error('שגיאה בחיבור:', err);
-      alert(err.status === 401 ? 'אימייל או סיסמה שגויים' : 'שגיאת שרת');
+  onLogin() {
+    // 1. ולידציה
+    if (!this.loginData.email || !this.loginData.password) {
+      alert('נא למלא אימייל וסיסמה');
+      return;
     }
-  });
-}}
+
+    const credentials = {
+      userName: this.loginData.email,
+      password: this.loginData.password
+    };
+
+    // 2. שליחה לשרת
+    this.userService.login(credentials).subscribe({
+      next: (res) => {
+        if (!res) {
+          alert('שגיאה בנתוני המשתמש');
+          return;
+        }
+
+        this.userService.saveUserToStorage(res);
+
+        // שליפת התפקיד מהתשובה של השרת
+        const serverRole = (res?.Role || res?.role || "").toLowerCase().trim();
+
+        if (serverRole === 'admin') {
+          this.router.navigate(['/admin']); 
+        } else {
+          // --- ניווט חכם (התוספת שלך) ---
+          // בודקים אם יש כתובת שחיכתה לנו ב-Storage (למשל /checkout)
+          const returnUrl = localStorage.getItem('returnUrl') || '/';
+          
+          // מנקים את ה-Storage כדי שבפעם הבאה הוא לא ינווט לשם בטעות
+          localStorage.removeItem('returnUrl'); 
+          
+          // ניווט ליעד המבוקש או לעמוד הבית כברירת מחדל
+          this.router.navigate([returnUrl]); 
+        }
+      },
+      error: (err) => {
+        alert(err.status === 401 ? 'אימייל או סיסמה שגויים' : 'שגיאת שרת');
+      }
+    });
+  }
+}

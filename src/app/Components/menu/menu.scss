@@ -56,7 +56,10 @@
       border-bottom-color: rgba(255, 255, 255, 0.2) !important;
     }
 
-    .promo-bar, .categories-nav ul li a, .header-right .custom-icon-link, .header-right .count {
+    // .promo-bar, .categories-nav ul li a, .header-right .custom-icon-link, .header-right .count {
+    //   color: #ffffff !important;
+    // }
+    .promo-bar, .categories-nav ul li a, .header-right i, .header-right .count {
       color: #ffffff !important;
     }
     
@@ -123,6 +126,8 @@
     }
   }
 
+
+
   /* אזור הלוגו (אמצע) - עכשיו נעול בול באמצע! */
   .header-center {
     flex: 1; /* נותן שליש מהרוחב */
@@ -134,7 +139,49 @@
       cursor: pointer;
     }
   }
+  /////////////////////
+  /// //  .header-right {
+//     display: flex;
+//     gap: 16px; /* צמצמנו את הרווח כדי שיהיו קרובים ואחידים */
+//     font-size: 22px; /* הגדלנו טיפה את האייקונים כדי שייראו טוב יותר */
+//     align-items: center;
+    
+//     /* מונע מהתפריט הנסתר של פריים ליצור 'רווח רפאים' בתוך הפלקס */
+//     p-menu {
+//       position: absolute;
+//       visibility: hidden;
+//     }
 
+//     .cart-icon {
+//       position: relative;
+//       display: flex;
+//       align-items: center;
+      
+//       .count {
+//         position: absolute;
+//         top: -6px;
+//         right: -8px;
+//         background: #000;
+//         color: #fff;
+//         font-size: 11px;
+//         font-weight: bold;
+//         border-radius: 50%;
+//         width: 17px;
+//         height: 17px;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//       }
+//     }
+
+//     i {
+//       cursor: pointer;
+//       transition: opacity 0.2s ease;
+//       &:hover { opacity: 0.6; }
+//     }
+//   }
+// }
+  /// /////////////////////
   /* אזור האייקונים (שמאל) */
   .header-right {
     flex: 1; /* נותן שליש מהרוחב */
@@ -142,6 +189,7 @@
     justify-content: flex-end; /* מצמיד את האייקונים לקצה השמאלי */
     gap: 20px; 
     align-items: center;
+    font-size: 22px; 
     
     p-menu {
       position: absolute;
@@ -159,6 +207,7 @@
         opacity: 0.6; 
       }
     }
+
 
     .cart-icon {
       position: relative;
@@ -178,6 +227,11 @@
         align-items: center;
         justify-content: center;
       }
+    }
+     i {
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+      &:hover { opacity: 0.6; }
     }
   }
 }

@@ -1,70 +1,47 @@
-<<<<<<< HEAD
-// import { Component, signal } from '@angular/core';
-// import {  RouterOutlet } from '@angular/router';
-// import {Button} from 'primeng/button'
-// import { Menubar } from 'primeng/menubar';
-// import { Menu } from './Components/menu/menu';
-// import { routes } from './app.routes';
-// import { RouterModule, Routes } from '@angular/router';
-// import { NgModule } from '@angular/core';
-
-
-
-
-// import { HomePage } from './Components/home-page/home-page';
-// import { ProductsList } from './Components/products-list/products-list';
-
- 
-// @Component({
-//   selector: 'app-root',
-//   standalone: true,
-//   imports: [RouterOutlet,Button, Menubar,Menu, RouterOutlet,RouterLink] ,
-//   templateUrl: './app.html',
-//   styleUrl: './app.scss'
-// })
-// export class App {
-//   protected readonly title = signal('Shop_Project');
-// }
-
-
-// import { Component } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
-// import { Menu } from './Components/menu/menu';
-
-// @Component({
-//   selector: 'app-root',
-//   standalone: true,
-//   imports: [Menu, RouterOutlet],
-//   templateUrl: './app.html',
-//   styleUrl: './app.scss',
-// })
-// export class App {}
-
-import { Component, inject ,signal} from '@angular/core'; // הוספנו את inject
-import { CommonModule } from '@angular/common'; // חובה בשביל ה-HTML של ההודעות
-import { RouterOutlet , RouterModule} from '@angular/router';
+import { Component, inject, signal, OnInit } from '@angular/core'; 
+import { CommonModule } from '@angular/common'; 
+import { RouterOutlet, RouterModule, RouterLink, Router, NavigationEnd } from '@angular/router'; 
 import { Menu } from './Components/menu/menu';
-import { CartService } from './Services/cart-service'; // ודאי שהנתיב נכון אצלך
-import { footer } from '@primeuix/themes/aura/confirmpopup';
+import { CartService } from './Services/cart-service'; 
 import { FooterComponent } from './Components/footer/footer';
 import { Button } from 'primeng/button';
 import { Menubar } from 'primeng/menubar';
-
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-
-  imports: [RouterOutlet,RouterModule,CommonModule , RouterOutlet,FooterComponent, Button, Menubar,CommonModule], // הוספנו את CommonModule לכאן
+  imports: [
+    RouterOutlet,
+    RouterModule,
+    RouterLink,
+    CommonModule, 
+    FooterComponent, 
+    Menu,
+    Button, 
+    Menubar
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
-  // חייב להיות public כדי ש-app.html יוכל להאזין לו
+export class App implements OnInit {
   public cartService = inject(CartService);
+  private router = inject(Router); // הזרקת הראוטר
+  
   protected readonly title = signal('Shop_Project');
+  isNetfreePage: boolean = false; // משתנה שיקבע אם להציג את התפריטים
   
   openSection: string = ''; 
+
+  ngOnInit() {
+    // האזנה לשינויי נתיב - בכל פעם שהכתובת משתנה הבדיקה תרוץ
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      // אם הנתיב הוא netfree, המשתנה יהיה true
+      this.isNetfreePage = event.urlAfterRedirects.includes('/netfree');
+    });
+  }
 
   toggleSection(section: string) {
     this.openSection = this.openSection === section ? '' : section;

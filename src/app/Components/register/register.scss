@@ -1,6 +1,11 @@
 :host {
   display: block;
   direction: rtl;
+  font-family: 'Assistant', sans-serif;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
 }
 
 .auth-container {
@@ -29,7 +34,6 @@
   }
 }
 
-
 .field {
   margin-bottom: 2.5rem; 
   position: relative;
@@ -54,9 +58,7 @@
   }
 }
 
-
 ::ng-deep {
-
   .underline-input {
     border: none !important;
     border-bottom: 1px solid #ccc !important;
@@ -70,7 +72,6 @@
       border-bottom: 2px solid #000 !important; 
     }
   }
-
 
   p-floatlabel {
     label {
@@ -87,25 +88,8 @@
     }
   }
 
-  .p-button.p-button-blue {
-    background: #4a7ba7 !important;
-    color: #fff !important;
-    border: 1px solid #4a7ba7 !important;
-    border-radius: 0 !important;
-    padding: 1.2rem !important;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-top: 2rem;
-    width: 100%;
-
-    &:hover { 
-      opacity: 0.9; 
-      background: #3a5f87 !important;
-    }
-  }
-
   .p-button.p-button-pink {
-    background: #ffb6c1 !important;
+    background: #ffb6c1 !important; // הצבע המקורי
     color: #fff !important;
     border: 1px solid #ffb6c1 !important;
     border-radius: 0 !important;
@@ -114,10 +98,34 @@
     text-transform: uppercase;
     margin-top: 2rem;
     width: 100%;
+    transition: all 0.3s ease;
 
-    &:hover { 
-      opacity: 0.9; 
-      background: #ff99aa !important;
+    // השינוי לשחור כשלוחצים או עוברים עם העכבר
+    &:hover, &:active, &:focus { 
+      background: #000 !important; 
+      border-color: #000 !important;
+      color: #fff !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+/* סטייל לאייקונים בתחתית ההרשמה */
+.social-login-icons {
+  margin-top: 2.5rem;
+  .icons-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    i {
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: #333;
+      transition: transform 0.2s;
+      &:hover {
+        transform: scale(1.1);
+        color: #ffb6c1;
+      }
     }
   }
 }

@@ -12,7 +12,8 @@ import { CardModule } from 'primeng/card';
   styleUrls: ['./admin-dashboard.scss']
 })
 export class AdminDashboardComponent {
-  adminCards = [
-    { title: 'ניהול מוצרים', icon: 'pi pi-box', route: '/admin/products', color: '#6366f1' }
+ adminCards = [
+    { title: 'ניהול מוצרים', icon: 'pi pi-box', route: '/admin/products', color: '#6366f1' },
+    { title: 'ניהול הזמנות', icon: 'pi pi-shopping-cart', route: '/admin/orders', color: '#10b981' } // התיקון כאן!
   ];
 }

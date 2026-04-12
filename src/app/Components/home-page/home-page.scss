@@ -29,9 +29,6 @@ button, input, select, textarea {
 /* ========================================= */
 /* --- 1. עיצוב מסך ראשון (Hero Banner) --- */
 /* ========================================= */
-/* ========================================= */
-/* --- 1. עיצוב מסך ראשון (Hero Banner) --- */
-/* ========================================= */
 
 @keyframes imageBreathe {
   0% {
@@ -138,7 +135,7 @@ button, input, select, textarea {
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 3%; /* צמצמנו padding חיצוני כדי לאפשר לתמונה לגדול */
+  padding: 3%; 
 
   .clickable-image-wrapper {
     display: block;
@@ -149,9 +146,9 @@ button, input, select, textarea {
     &:active { transform: scale(0.98); }
 
     .promo-img {
-      /* --- התיקון להגדלת התמונה --- */
-      max-width: 90%; /* הגדלנו מ-75% ל-90% */
-      max-height: 80vh; /* אפשרנו לה לגבוה יותר (מ-70vh ל-80vh) */
+    
+      max-width: 90%; 
+      max-height: 80vh; 
       object-fit: contain;
       box-shadow: 0 15px 40px rgba(0,0,0,0.1); /* צל קצת יותר נוכח */
     border-radius: 6px;
@@ -160,10 +157,8 @@ button, input, select, textarea {
   }
 }
 
-/* הצד של הטקסט (שמאל) */
 .promo-text-side {
-  /* --- התיקון להגדלת אזור הטקסט --- */
-  padding: 0 5% 0 8%; /* צמצמנו מרווחים חיצוניים (מ-8% ימין ו-12% שמאל) */
+  padding: 0 5% 0 8%; 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -175,9 +170,8 @@ button, input, select, textarea {
 
     background-color: #eab4b8; 
     color: #000;
-    /* --- הגדלנו את המדבקה --- */
-    padding: 8px 18px; /* הגדלנו padding */
-    font-size: 14px; /* הגדלנו פונט מ-13px */
+    padding: 8px 18px; 
+    font-size: 14px; 
     font-family: Arial, sans-serif;
     margin-bottom: 30px; /* הגדלנו מרווח */
   }
@@ -205,12 +199,11 @@ button, input, select, textarea {
     line-height: 1.9; /* הגדלנו מרווח בין שורות */
     color: #27251F;
     margin: 0 0 60px 0; /* הגדלנו מרווח מהתקנון */
-    max-width: 550px; /* הגדלנו רוחב מקסימלי כדי שיתאים לטקסט הגדול */
+    max-width: 550px; 
   }
 
   .terms {
-    /* --- הגדלנו את התקנון --- */
-    font-size: 15px; /* הגדלנו מ-14px */
+    font-size: 15px; 
     color: #27251F;
     margin-top: 20px;
   }
@@ -225,7 +218,6 @@ button, input, select, textarea {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* במובייל נצמצם פדינג כדי להרוויח מקום */
   padding: 5% 0; 
   
   @media (max-width: 992px) {
@@ -447,7 +439,6 @@ button, input, select, textarea {
   }
 }
 
-/* --- התאמה רספונסיבית --- */
 @media (max-width: 1100px) {
   .editorial-grid { grid-template-columns: 1fr 1.5fr; }
   .image-side-col { display: none; }
@@ -459,7 +450,6 @@ button, input, select, textarea {
 .giftcard-final-section {
   z-index: 5;
   
-  /* רקע לבן נקי מוחלט כמו בדוגמה */
   background-color: #ffffff; 
   
   display: flex;
@@ -484,7 +474,6 @@ button, input, select, textarea {
   }
 
   .giftcard-img {
-    /* --- התיקון הקריטי: הקטנה ומרכּוז עם שוליים רחבים --- */
     
     /* 1. הקטנה: התמונה תתפוס מקסימום 70% מגובה המסך או 80% מהרוחב */
     /* זה מבטיח שיש המון "אוויר" לבן מסביב (כמו בדוגמת המטבח) */

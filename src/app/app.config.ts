@@ -1,29 +1,29 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { providePrimeNG } from 'primeng/config';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router'; 
+import { provideHttpClient } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; // חובה ל-PrimeNG
+import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { routes } from './app.routes';
-import {  provideHttpClient } from '@angular/common/http';
+
 export const appConfig: ApplicationConfig = {
   providers: [
-     provideRouter(
+    provideRouter(
       routes,
-      // === כאן אנחנו מדליקים את הגלילה החכמה לעוגנים! ===
       withInMemoryScrolling({
         anchorScrolling: 'enabled',
         scrollPositionRestoration: 'enabled'
       })
     ),
     provideHttpClient(),
-        providePrimeNG({
+    provideAnimationsAsync(), // הוספנו תמיכה באנימציות
+    providePrimeNG({
       theme: {
         preset: Aura,
-         options: {
-            darkModeSelector: false 
+        options: {
+            darkModeSelector: false // מבטל קפיצות צבע מוזרות אם אין לך מצב לילה מוגדר
         }
       }
-    }),
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
+    })
   ]
 };

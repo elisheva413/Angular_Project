@@ -1,3 +1,5 @@
+
+
 <div class="header-spacer" [class.hidden]="isHomePage"></div>
 
 <div class="card">
@@ -27,15 +29,23 @@
     </div>
 
     <div class="header-right">
-      <i class="pi pi-map-marker" routerLink="/stores" style="cursor: pointer;" title="סניפי הרשת"></i>
-      <i class="pi pi-user" (click)="userMenu.toggle($event)" style="cursor: pointer;" title="אפשרויות משתמש"></i> 
-      <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
-      
-      <div class="cart-icon" routerLink="/cart" style="cursor: pointer;">
-        <i class="pi pi-shopping-bag"></i>
-        <span class="count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
-      </div>
-    </div>
+  <i *ngIf="isAdmin" 
+     class="pi pi-cog" 
+     routerLink="/admin" 
+     style="cursor: pointer; color: black;" 
+     title="פאנל ניהול">
+  </i>
+
+  <i class="pi pi-map-marker" routerLink="/stores" style="cursor: pointer;" title="סניפי הרשת"></i>
+  
+  <i class="pi pi-user" (click)="userMenu.toggle($event)" style="cursor: pointer;" title="אפשרויות משתמש"></i> 
+  <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
+  
+  <div class="cart-icon" routerLink="/cart" style="cursor: pointer;">
+    <i class="pi pi-shopping-bag"></i>
+    <span class="count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+  </div>
+</div>
   </div>
 
    <nav class="categories-nav">

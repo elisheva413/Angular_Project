@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, map, tap, catchError, throwError } from 'rxjs';
+import { Observable, map, catchError, throwError, of } from 'rxjs';
 import { ProductModel } from '../Models/Products-Model';
 
-// הגדרת המבנה שחוזר מה-API (חשוב מאוד בשביל ה-totalCount)
 export type ProductsResponse = {
   items: ProductModel[];
   totalCount: number;
@@ -29,34 +29,20 @@ export interface ProductFilters {
   providedIn: 'root',
 })
 export class ProductService {
+  private http = inject(HttpClient);
   private apiUrl = 'https://localhost:44360/api/Products';
 
-  constructor(private http: HttpClient) {}
-
-  // מביא את כל המוצרים ללא סינון
-  getAllProducts(): Observable<ProductModel[]> {
-    return this.http.get<ProductsResponse>(this.apiUrl).pipe(
-      map(res => res?.items ?? [])
-    );
-  }
-
-  // הפונקציה המרכזית - תומכת בסינונים, חיפוש וגלילה אינסופית
+  // הפונקציה המקורית לסינונים וגלילה
   getProducts(filters?: ProductFilters): Observable<ProductsResponse> {
     let params = new HttpParams();
-
     if (filters) {
-      // טיפול בקטגוריות (תומך גם בבודד וגם במערך)
       if (filters.categoryId != null) {
         if (Array.isArray(filters.categoryId)) {
-          filters.categoryId.forEach(id => {
-            params = params.append('categoryId', id.toString());
-          });
+          filters.categoryId.forEach(id => params = params.append('categoryId', id.toString()));
         } else {
           params = params.append('categoryId', filters.categoryId.toString());
         }
       }
-
-      // שאר הפרמטרים
       if (filters.q) params = params.set('q', filters.q);
       if (filters.minPrice != null) params = params.set('minPrice', filters.minPrice.toString());
       if (filters.maxPrice != null) params = params.set('maxPrice', filters.maxPrice.toString());
@@ -68,59 +54,42 @@ export class ProductService {
       if (filters.skip != null) params = params.set('skip', filters.skip.toString());
       if (filters.position != null) params = params.set('position', filters.position.toString());
     }
+    return this.http.get<ProductsResponse>(this.apiUrl, { params });
+  }
 
-    return this.http.get<ProductsResponse>(this.apiUrl, { params }).pipe(
-      tap(res => console.log('✅ נתונים התקבלו:', res)),
+  // פונקציית הניהול המעודכנת - מחלצת את ה-items מתוך התשובה
+  getAllProducts(): Observable<ProductModel[]> {
+    return this.http.get<ProductsResponse>(this.apiUrl).pipe(
+      map(res => res?.items || []),
       catchError(err => {
-        console.error('❌ שגיאת Service:', err);
-        return throwError(() => err);
+        console.error('שגיאה בשליפת מוצרים', err);
+        return of([]); // מחזיר מערך ריק במקרה של שגיאה כדי למנוע קריסה
       })
     );
   }
 
-  // מביא מוצר בודד לפי ID - קריטי לדף Single Product!
+  addProduct(product: ProductModel): Observable<ProductModel> {
+    return this.http.post<ProductModel>(this.apiUrl, product);
+  }
+
+  updateProduct(id: number, product: ProductModel): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, product);
+  }
+
+  deleteProduct(id: number): Observable<boolean> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`).pipe(
+      map(() => true),
+      catchError(err => throwError(() => new Error('מחיקה נכשלה')))
+    );
+  }
+
+  uploadImage(file: File): Observable<{ imageUrl: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<{ imageUrl: string }>(`${this.apiUrl}/upload-image`, formData);
+  }
+
   getById(id: number): Observable<ProductModel> {
     return this.http.get<ProductModel>(`${this.apiUrl}/${id}`);
   }
-
-  // מחיקה רכה - משנה את הסטטוס של המוצר ל-IsActive = false בשרת
-  deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
-      tap(() => console.log(`✅ מוצר ${id} הועבר למצב לא פעיל`)),
-      catchError(err => {
-        console.error('❌ שגיאה במחיקת מוצר:', err);
-        return throwError(() => err);
-      })
-    );
-  }
 }
-//מנהל - זהבי 
-//   private apiUrl ='https://localhost:44382/api/Products'
-//   constructor(private http:HttpClient){}  
-
-
-// getAllProducts(page: number = 1, pageSize: number = 12): Observable<any> {
-//   return this.http.get<any>(`${this.apiUrl}?position=${page}&skip=${pageSize}`);
-// }
-
-//   getProductById(id: number): Observable<ProductModel> {
-//     return this.http.get<ProductModel>(`${this.apiUrl}/${id}`);
-//   }
-
-//   addProduct(product: ProductModel): Observable<ProductModel> {
-//     return this.http.post<ProductModel>(this.apiUrl, product);
-//   }
-
-//   updateProduct(id: number, product: ProductModel): Observable<ProductModel> {
-//     return this.http.put<ProductModel>(`${this.apiUrl}/${id}`, product);
-//   }
-
-//   deleteProduct(id: number): Observable<boolean> {
-//     return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
-//   }
-//   uploadImage(file: File) {
-//   const formData = new FormData();
-//   formData.append('file', file);
-//   return this.http.post<any>(`${this.apiUrl}/upload-image`, formData);
-// }
-// }

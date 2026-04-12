@@ -73,13 +73,10 @@ export class CartService {
   }
 
   // פונקציה לריקון הסל אחרי רכישה מוצלחת
+// cart-service.ts (מעודכן)
 clearCart() {
-  // 1. מעדכנים את ה-BehaviorSubject למערך ריק כדי שכל האתר יתעדכן
   this.cartSubject.next([]);
-  
-  // 2. מנקים את ה-LocalStorage כדי שהסל לא יחזור בריענון דף
-  localStorage.removeItem('cart'); // ודאי שזה השם בו את שומרת את הסל
-  
-  console.log('🛒 הסל רוקן בהצלחה לאחר הרכישה');
+  localStorage.removeItem('p_cart'); // איחוד שם המפתח
+  console.log('🛒 הסל רוקן בהצלחה');
 }
 }

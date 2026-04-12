@@ -10,7 +10,8 @@
         <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 120 }">עגילים</a></li>
         <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 130 }">תכשיטי חריטה</a></li>
         <li><a [routerLink]="['/products']" [queryParams]="{ categoryId: 901 }">מתנות</a></li>
-        <li><a href="#">DISNEY X PANDORA</a></li> <li><a [routerLink]="['/gift-card']">GIFT CARD</a></li>
+        <li><a href="#">DISNEY X PANDORA</a></li> 
+        <li><a [routerLink]="['/gift-card']">GIFT CARD</a></li>
       </ul>
     </div>
 
@@ -40,7 +41,7 @@
         <li>ניקוי תכשיטים</li>
         <li>ביטול עסקה</li>
         <li>הצהרת נגישות</li>
-        <li>תקנון פעילות אינסטגרם</li>
+        <li><a routerLink="/netfree">תקנון פעילות אינסטגרם</a></li> 
         <li>תקנון הטבה 1+2</li>
       </ul>
     </div>
@@ -49,9 +50,9 @@
       <h4>איזור אישי</h4>
       <ul>
         <li><a routerLink="/login">כניסה והרשמה</a></li>
-        <li>החשבון שלי</li>
+        <li><a [routerLink]="accountLink">החשבון שלי</a></li> 
         <li>בדיקת יתרת גיפט קארד</li>
-        <li>ההזמנות שלי</li>
+        <li><a [routerLink]="ordersLink">ההזמנות שלי</a></li> 
       </ul>
     </div>
 
@@ -59,9 +60,9 @@
       <h4>צרו קשר</h4>
       <ul>
         <li>כתבו לנו</li>
-        <li>Whatsapp</li>
-        <li>Facebook</li>
-        <li>Instagram</li>
+        <li><a routerLink="/netfree">Whatsapp</a></li> 
+        <li><a routerLink="/netfree">Facebook</a></li> 
+        <li><a routerLink="/netfree">Instagram</a></li> 
       </ul>
     </div>
   </div>
@@ -83,10 +84,10 @@
 
   <div class="footer-bottom">
     <div class="social-links">
-      <i class="pi pi-facebook"></i>
-      <i class="pi pi-youtube"></i>
-      <i class="pi pi-instagram"></i>
-      <i class="pi pi-pinterest"></i>
+      <i class="pi pi-facebook" routerLink="/netfree" style="cursor: pointer;"></i>
+      <i class="pi pi-youtube" routerLink="/netfree" style="cursor: pointer;"></i>
+      <i class="pi pi-instagram" routerLink="/netfree" style="cursor: pointer;"></i>
+      <i class="pi pi-pinterest" routerLink="/netfree" style="cursor: pointer;"></i>
     </div>
     <img src="images/logo.png" alt="Pandora" class="footer-logo-img">
     <p>Pandora 2026 © | Developed by Elisheva Polsky & Zehavi Kornvasser</p>

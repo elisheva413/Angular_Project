@@ -1,7 +1,3 @@
-
-//////-----------------------------------////
-//לפרויקט של אלישבע נשתמש בזה:
-/////------------------------------------////
 export class ProductModel {
   productsId!: number;
   categoryId!: number;
@@ -13,28 +9,6 @@ export class ProductModel {
   color!: string;
   material!: string;
   quantity!: number;
-  isActive?: boolean;
-  //imagePath?: string;
-  //categoryName?: string;
-  // inventoryStatus?: string;
+  isActive!: boolean;
+  
 }
-//////-----------------------------------////
-//לפרויקט של זהבי נשתמש בזה:
-/////------------------------------------////
-//    export class ProductModel {
-//     productId!: number;
-//     productName!: string;
-//     price!: number;
-//     description?: string; 
-//     categoryId!: number;
-//     imagePath?: string;
-//     imgUrl?: string;
-//     categoryName?: string;
-//     color?: string;
-//     material?: string;
-//     quantity?: number;
-//     isActive?: boolean;
-//     imgUrl2?: string;
-//     inventoryStatus?: string;
-
-// }

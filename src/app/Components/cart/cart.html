@@ -1,5 +1,5 @@
 <div class="cart-page-container" dir="rtl">
-  <div class="cart-card shadow-2">
+  <div class="cart-card">
     
     <div class="cart-header">
       <h1>סל הקניות שלי</h1>
@@ -12,8 +12,7 @@
           
           <div class="item-image">
             <img [src]="getProductImagePath(item)" 
-                 [alt]="item.product.productsName" 
-                 onerror="this.src='assets/images/placeholder.png'">
+                 [alt]="item.product.productsName">
           </div>
           
           <div class="item-details">
