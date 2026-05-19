@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router'; 
 import { CartService } from '../../Services/cart-service'; 
-import { CartItem } from '../../Models/Cart-Model'; 
+import { CartItem, SavedItem } from '../../Models/Cart-Model'; 
 import { UserService } from '../../Services/user-service';
 
 @Component({
@@ -20,22 +20,31 @@ export class Cart implements OnInit {
   private router = inject(Router); 
   
   cartItems: CartItem[] = [];
+  savedItems: SavedItem[] = [];
 
   readonly shippingThreshold = 299;
   readonly shippingCost = 39.90;
 
   ngOnInit() {
     this.cartService.cart$.subscribe(items => this.cartItems = items);
+    this.cartService.saved$.subscribe(items => this.savedItems = items);
   }
 
+  showNoItemsWarning = false;
+
   proceedToCheckout() {
+    const hasIncluded = this.cartItems.some(i => i.included !== false);
+    if (!hasIncluded) {
+      this.showNoItemsWarning = true;
+      setTimeout(() => this.showNoItemsWarning = false, 3000);
+      return;
+    }
+    this.showNoItemsWarning = false;
     if (this.userService.isLoggedIn()) {
-      console.log('משתמש מחובר, עובר לתשלום...');
       this.router.navigate(['/checkout']);
     } else {
-      console.log('משתמש לא מחובר, שומר יעד ומעביר ללוגין');
-      localStorage.setItem('returnUrl', '/checkout'); 
-      this.router.navigate(['/login']); 
+      localStorage.setItem('returnUrl', '/checkout');
+      this.router.navigate(['/login']);
     }
   }
 
@@ -72,6 +81,17 @@ export class Cart implements OnInit {
       return `${apiBaseUrl}products/${cleanPath}`;
     }
   }
+
+  toggleIncluded(productId: number) {
+    this.cartService.toggleIncluded(productId);
+    if (this.showNoItemsWarning && this.cartItems.some(i => i.included !== false)) {
+      this.showNoItemsWarning = false;
+    }
+  }
+
+  saveForLater(productId: number) { this.cartService.saveForLater(productId); }
+  moveToCart(productId: number) { this.cartService.moveToCart(productId); }
+  removeSaved(productId: number) { this.cartService.removeSaved(productId); }
 
   updateQuantity(productId: number, quantity: number) {
     this.cartService.updateQuantity(productId, quantity);

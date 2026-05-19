@@ -52,7 +52,7 @@ export class Menu implements OnInit {
 
     // 2. ניהול מונה המוצרים בסל
     this.cartService.cart$.subscribe(items => {
-      this.cartItemCount = items.reduce((sum, item) => sum + item.selectedQuantity, 0);
+      this.cartItemCount = items.filter(i => i.included !== false).length;
     });
 
     // 3. ניהול תפריט משתמש דינמי (הלוגיקה החדשה והנקייה)

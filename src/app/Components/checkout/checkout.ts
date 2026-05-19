@@ -36,7 +36,7 @@ export class Checkout implements OnInit {
     }
 
     this.cartService.cart$.subscribe(items => {
-      this.cartItems = items;
+      this.cartItems = items.filter(i => i.included !== false);
     });
   }
 
@@ -108,7 +108,7 @@ export class Checkout implements OnInit {
     this.orderService.processFakePaymentAndCreateOrder(newOrder).subscribe({
       next: (res) => {
         this.isSubmitting = false;
-        this.cartService.clearCart();
+        this.cartService.clearIncluded();
 
         // -------------------------------------------------------------
         // הלוגיקה החדשה: בדיקה ושליחת גיפט קארד *אחרי* התשלום!

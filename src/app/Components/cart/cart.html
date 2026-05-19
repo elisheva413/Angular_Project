@@ -8,7 +8,12 @@
 
     <div class="cart-content" *ngIf="cartItems.length > 0; else emptyCart">
       <div class="cart-items-list">
-        <div *ngFor="let item of cartItems" class="cart-item">
+        <div *ngFor="let item of cartItems" class="cart-item" [class.excluded]="!item.included">
+          
+          <label class="item-checkbox" [title]="item.included ? 'הסר מהקנייה' : 'הוסף לקנייה'">
+            <input type="checkbox" [checked]="item.included" (change)="toggleIncluded(item.product.productsId)">
+            <span class="checkmark"><i class="pi pi-check"></i></span>
+          </label>
           
           <div class="item-image">
             <img [src]="getProductImagePath(item)" 
@@ -21,18 +26,19 @@
           </div>
 
           <div class="item-actions">
-            <button class="btn-delete" (click)="removeItem(item.product.productsId)" title="הסר פריט">
-              <i class="pi pi-trash"></i>
-            </button>
-
-            <div class="quantity-selector">
-              <button class="qty-btn" 
-                      (click)="updateQuantity(item.product.productsId, item.selectedQuantity + 1)" 
-                      [disabled]="item.selectedQuantity >= item.product.quantity">+</button>
-              <span class="qty-value">{{ item.selectedQuantity }}</span>
-              <button class="qty-btn" 
-                      (click)="updateQuantity(item.product.productsId, item.selectedQuantity - 1)" 
-                      [disabled]="item.selectedQuantity <= 1">−</button>
+            <div class="top-row">
+              <div class="quantity-selector">
+                <button class="qty-btn"
+                        (click)="updateQuantity(item.product.productsId, item.selectedQuantity + 1)"
+                        [disabled]="item.selectedQuantity >= item.product.quantity">+</button>
+                <span class="qty-value">{{ item.selectedQuantity }}</span>
+                <button class="qty-btn"
+                        (click)="updateQuantity(item.product.productsId, item.selectedQuantity - 1)"
+                        [disabled]="item.selectedQuantity <= 1">−</button>
+              </div>
+              <button class="btn-delete" (click)="removeItem(item.product.productsId)" title="הסר פריט">
+                <i class="pi pi-trash"></i>
+              </button>
             </div>
           </div>
           
@@ -56,6 +62,10 @@
           <span>סה"כ לתשלום:</span>
           <span>{{ getFinalTotal() | number:'1.2-2' }} ₪</span>
         </div>
+        <div class="no-items-warning" *ngIf="showNoItemsWarning">
+          <i class="pi pi-info-circle"></i>
+          יש לסמן לפחות מוצר אחד לקנייה
+        </div>
         <button class="simple-btn-checkout" (click)="proceedToCheckout()">המשך לתשלום</button>
       </div>
     </div>
@@ -75,6 +85,27 @@
         </button>
       </div>
     </ng-template>
+
+    <div class="saved-section" *ngIf="savedItems.length > 0">
+      <h2 class="saved-title">שמור למאוחר יותר ({{ savedItems.length }})</h2>
+      <div *ngFor="let item of savedItems" class="saved-item">
+        <div class="item-image">
+          <img [src]="getProductImagePath({product: item.product, selectedQuantity: 1, included: true})" [alt]="item.product.productsName">
+        </div>
+        <div class="item-details">
+          <h3 class="product-name">{{ item.product.productsName }}</h3>
+          <p class="product-price">{{ item.product.price | number:'1.2-2' }} ₪</p>
+        </div>
+        <div class="saved-actions">
+          <button class="btn-move-to-cart" (click)="moveToCart(item.product.productsId)">
+            <i class="pi pi-shopping-cart"></i> העבר לסל
+          </button>
+          <button class="btn-delete" (click)="removeSaved(item.product.productsId)" title="הסר">
+            <i class="pi pi-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>
