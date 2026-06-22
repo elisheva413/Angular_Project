@@ -110,6 +110,26 @@
         outline: 1px solid #27251F;
         .radio-indicator-small { background: #27251F; border-color: #27251F; }
       }
+
+      &.amount-custom {
+        min-width: 140px;
+
+        input {
+          border: none;
+          border-bottom: 1px solid #27251F;
+          background: transparent;
+          width: 80px;
+          font-size: 15px;
+          text-align: center;
+          outline: none;
+          font-family: inherit;
+          padding: 2px 0;
+
+          &::placeholder { color: #aaa; font-size: 13px; }
+          &::-webkit-inner-spin-button,
+          &::-webkit-outer-spin-button { -webkit-appearance: none; }
+        }
+      }
     }
   }
 

@@ -33,10 +33,22 @@
       <div class="amounts-flex">
         <div *ngFor="let am of amounts" 
              class="amount-box" 
-             [class.active]="selectedAmount === am"
+             [class.active]="selectedAmount === am && !isCustomAmount"
              (click)="selectAmount(am)">
           <div class="radio-indicator-small"></div>
           <span>₪{{am}}</span>
+        </div>
+        <div class="amount-box amount-custom" 
+             [class.active]="isCustomAmount"
+             (click)="selectCustomAmount()">
+          <div class="radio-indicator-small"></div>
+          <span *ngIf="!isCustomAmount">אחר</span>
+          <input *ngIf="isCustomAmount"
+                 type="number"
+                 [(ngModel)]="customAmount"
+                 placeholder="הזן סכום"
+                 min="50" max="5000"
+                 (click)="$event.stopPropagation()">
         </div>
       </div>
     </section>
